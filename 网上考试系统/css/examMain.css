@@ -1,0 +1,110 @@
+.iconCon{
+   padding-right: 30px;
+   padding-left: 30px;
+	margin:0 auto;
+}
+.img-circle{
+	width: 200px;
+	height: 200px;
+}
+.place{
+	padding-right: 20px;
+   padding-left: 20px;
+}
+#select a{
+	margin:0 auto;
+}
+.radio div{
+	padding:10px 0 10px 50px;
+}
+.panels p{
+	padding:20px 40px 20px 40px;
+}
+.panels h4{
+	padding:20px 40px 20px 40px;
+}
+#select{
+	padding:40px 0 40px 0;
+}
+.panel-default {
+    border-color: #fff;
+}
+
+.answer{
+	padding:20px 40px 20px 40px;
+}
+.icons
+{
+	position:fixed;
+    left:750px;
+    bottom:200px;
+    z-index: 1030;
+}
+.imgs
+{
+	width:150px;
+    height: 150px;
+}
+.timeLimit{
+	padding:50px;
+}
+.img-container{width:150px;height:150px;position:relative;}
+.img-container img{width:150px;height:150px;position:absolute;left:0;top:0;z-index:1;}
+.img-container .layer{width:200px;height:20px;position:absolute;left:40;top:40;z-index:2;background:rgba(0,0,0,0);background:#000\0;filter:alpha(opacity=0)\0;background:#fff;margin: 80px auto;text-align: center;}
+
+.textArea{
+
+margin: 10px 10px;
+width: 80%; 
+height:150px;
+padding: 1;
+ min-height: 120px; 
+    max-height: 300px;
+    _height: 120px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 3px; 
+    outline: 0; 
+    border: 1px solid #a0b3d6; 
+    font-size: 12px; 
+    word-wrap: break-word;
+    resize:none;
+    overflow-x: hidden;
+    overflow-y: auto;
+ border-radius:5px;
+
+}
+/*main.html*/
+table[Attributes Style] {
+    width: 1000px;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    background-color: rgb(240, 240, 240);
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+}
+
+table {
+	color:#3D3D61;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+    height: 150px;
+    
+}
+.table{
+	background-color: #F8F8F8;
+}
+
+a:link {
+	color: #777777;
+	text-decoration:none;
+	}
+a:hover{
+	color: #5CB85C;
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/test.css" />
+		<link rel="stylesheet" href="../css/examMain.css" />
+		<style>
+			.clock{
+			width:200px;
+			position:absolute;
+			top:130px;
+			left: 800px;
+			z-index: 1;
+			border: 1px solid #D6E9C6;
+			}
+			#submit{
+				width:200px;
+				padding:10px 40px 0 40px;
+			}
+			.submitbtn{
+				width:90px;
+			}
+		</style>
+		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	
+		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
+		<script>
+        	window.onload=function(){
+     
+       	 	daojishi();
+    	 }
+
+     	 var counttime=5*60;//总秒钟
+     
+     	 function daojishi(){
+      	if(counttime>=0){
+             var ms = counttime%60;//余数 89%60==29秒
+             var mis = Math.floor(counttime/60);//分钟
+             if(mis>=60){
+              var hour=Math.floor(mis/60);
+
+     		mis=Math.floor((counttime-hour*60*60)/60);
+
+              document.getElementById("mss").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
+              
+             }else if(mis>=1){
+              document.getElementById("mss").innerHTML=mis+"分"+ms+"秒"; 
+             }else{
+              document.getElementById("mss").innerHTML=ms+"秒"; 
+             }
+
+   
+              counttime--;
+              vartt =  window.setTimeout("daojishi()",1000);
+   		}else{
+	   	    window.clearTimeout(vartt);
+	       window.confirm("考试时间结束,请单击提交"); 
+	       tijiao();
+      
+   		}
+
+   
+     }
+     
+     function tijiao(){
+        document.forms[0].submit();
+     }
+        </script>
+	</head>
+	<body>
+		
+		<!--<div class="icons">
+			
+			<div class="img-container">
+			    <img class="imgs" src="../img/icons.png" />
+			    <div class="layer"><span>剩余时间为：</span><label  name="mss" id="mss"></label>  </div>
+			</div>
+		</div>-->
+		<div class="row clearfix ">
+			<div class="col-md-3 column">
+				<div class="panel panel-default clock">
+					<div class="panel-heading">
+						<h3 class="panel-title" align="center">
+							正在考试中
+						</h3>
+					</div>
+					<div class="panel-body">
+						
+							<!--<img class="imgs" src="../img/clock.png" />-->
+						
+						<p align="center">剩余时间</p>
+						<div align="center" class="layer"><label  name="mss" id="mss"></label>  </div>
+						<div id="submit">
+							<button type="button" class="btn  btn-success submitbtn" display：block;>交卷</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active">
+				<a href="#home" role="tab" data-toggle="tab">选择题</a>
+			</li>
+			<li role="presentation">
+			<a href="#profile" role="tab" data-toggle="tab" >填空题</a>
+			</li>
+			
+		</ul>
+		<div class="tab-content">    
+			<div role="tabpanel" class="tab-pane active" id="home">
+				<div >
+						
+						<div class="panels">
+							<h4>
+								This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+							</h4>
+						</div>
+						
+						<div>
+							<div class="radio">
+								<div>
+								   <label>
+								      <input type="radio" name="optionsRadios" id="optionsRadios1" 
+								         value="option1" checked>
+								          A、
+								          <span>八佰伴逼傻逼不上班山东省地方</span>
+								   </label>
+								  
+								</div>
+								<div>
+								   	<label>
+								      <input type="radio" name="optionsRadios" id="optionsRadios2" 
+								         value="option2">
+								         B、
+								         <span>八佰伴逼傻逼不上班山东省地方</span>
+								   </label>
+								  
+								</div>
+								<div>
+								   <label>
+								      <input type="radio" name="optionsRadios" id="optionsRadios3" 
+								         value="option3">
+								         C、
+								         <span>八佰伴逼傻逼不上班山东省地方</span>
+								   </label>
+								   
+								</div>
+								<div>
+									<label>
+								      	<input type="radio" name="optionsRadios" id="optionsRadios4" 
+								         value="option4">
+								         D、
+								         <span>八佰伴逼傻逼不上班山东省地方</span>
+									</label>
+									<p></p>
+								</div>
+							   
+							</div>
+		
+						</div>	
+						
+						<div id="select">
+								<div class="row clearfix">
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">首题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">上一题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">下一题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">末题</a>
+								</div>
+							</div>
+					
+						</div>
+						
+					</div>
+			</div>    
+  
+  			<div role="tabpanel" class="tab-pane" id="profile">
+  				<div>
+  					<div class="panels">
+						<h4>
+							This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+						</h4>
+						<div class="answer">
+						<span class="input input--hoshi">
+							<input class="input__field input__field--hoshi" type="text" id="input-4" />
+							<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+								<span class="input__label-content input__label-content--hoshi">你的答案</span>
+							</label>
+						</span>
+						</div>
+						<div id="select">
+								<div class="row clearfix">
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">首题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">上一题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">下一题</a>
+								</div>
+								<div class="col-xs-2 col-xs-offset-1">
+									<a class="btn btn-default btn-large" href="#">末题</a>
+								</div>
+							</div>
+					
+						</div>
+					</div>
+  				</div>
+  			</div>    
+		</div>    
+	</body>
+</html>
