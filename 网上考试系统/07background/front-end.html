@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		
 		<link rel="stylesheet" href="../css/adminFrame.css" />
-		
+
 		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
 	
 		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
@@ -15,6 +15,17 @@
 		window.onload=function(){
 			document.body.parentNode.style.overflow="hidden";//隐藏且禁用
 		}
+		
+		function changeFrameHeight(){
+        	var ifm= document.getElementById("mainiframe");
+        	ifm.height=document.documentElement.clientHeight-56; //56是头顶的高度，和网友估计不一样。
+    	}
+    	$(function(){ window.onresize=function(){
+            changeFrameHeight(); }}); //这里不知道是否还要 $(function(){}) 这个闭包吗？后证实不需要
+		
+		
+		
+		
 		</script>
 	</head>
 	<body>
@@ -31,19 +42,21 @@
 	          <a class="navbar-brand" href="#">网上考试系统</a>
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
+	        	
+	        		
+	        	
 	          <ul class="nav navbar-nav navbar-right">
+	          	<li><a href="../02examFrame/main.html" target="engine"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
 	            <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;修改密码</a></li>
 	            <li><a href="#"><span class="glyphicon glyphicon-off"></span>&nbsp;注销</a></li>
 	          </ul>
-	          <form class="navbar-form navbar-right">
-	            <input type="text" class="form-control" placeholder="搜索">
-	          </form>
+	          
 	        </div>
 	      </div>
 	    </nav>
-	    
+
 	    <div class="testFrame">
-	    	<iframe src="../06testPaper/TestFrame.html" id="engine" name="engine" frameborder="0" marginwidth="0" marginheight="0" allowtransparency="true" style="background-color:#000"></iframe>
+	    	<iframe id="mainiframe" src="../06testPaper/TestFrame.html" id="engine" name="engine" frameborder="0" marginwidth="0" marginheight="0" allowtransparency="true" style="background-color:#000" onload="changeFrameHeight()"></iframe>
 	    </div>
 	    
 	   

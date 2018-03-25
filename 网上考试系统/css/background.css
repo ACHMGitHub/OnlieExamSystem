@@ -24,3 +24,6 @@ list-style-type:none;
 .panel-body ul li{
 	padding:10px 10px;
 }
+.panel a:hover,a:link,a:visited{
+	text-decoration: none;
+}

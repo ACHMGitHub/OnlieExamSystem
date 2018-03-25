@@ -4,77 +4,87 @@
 		<meta charset="UTF-8">
 		<title>添加选择题</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/test.css" />
-		<link rel="stylesheet" href="../css/examMain.css"/>
+	
+		<link rel="stylesheet" href="../css/addChangeCss.css"/>
 		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
 	
 		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
 	</head>
-	<body>
-		<form role="form" class="col-xs-5 col-xs-offset-4">
-		  <div class="form-group">
-		    <label for="name">题干</label>
-		    <textarea class="form-control" rows="3"></textarea>
-		  </div>
+	<body style="padding: 0px;">
+		<form class="form" role="form" >
+		  <div class="form-group" style="padding-bottom: 50px;">
+				<label for="ch_question" class="col-sm-2 control-label">题干</label>
+				<div class="col-sm-10">
+					 <textarea class="form-control" rows="3"></textarea>
+				</div>
+			</div>
 		  
-		  <div>
-		  	<span class="input input--hoshi">
-		    	<input type="text" class="input__field input__field--hoshi" id="choiceA" />
-		    	<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-					<span class="input__label-content input__label-content--hoshi">教师</span>
-				</label>
-		    </span>
-		  </div>
 		  
-		  <div>
+		  	
+		 
 		  	<div class="form-group">
-		    <span class="input input--hoshi">
-		    	<input type="text" class="input__field input__field--hoshi" id="choiceA" />
-		    	<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-					<span class="input__label-content input__label-content--hoshi">选项A</span>
-				</label>
-		    </span>
-		  </div>
-		  <div>
-		  	<div class="form-group">
-		    <span class="input input--hoshi">
-		    	<input type="text" class="input__field input__field--hoshi" id="choiceA" />
-		    	<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-					<span class="input__label-content input__label-content--hoshi">选项A</span>
-				</label>
-		    </span>
-		  </div>
-		  <div>
-		  	<div class="form-group">
-		    <span class="input input--hoshi">
-		    	<input type="text" class="input__field input__field--hoshi" id="choiceA" />
-		    	<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-					<span class="input__label-content input__label-content--hoshi">选项A</span>
-				</label>
-		    </span>
-		  </div>
-		  <div>
-		  	<div class="form-group">
-		    <span class="input input--hoshi">
-		    	<input type="text" class="input__field input__field--hoshi" id="choiceA" />
-		    	<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-					<span class="input__label-content input__label-content--hoshi">选项A</span>
-				</label>
-		    </span>
-		  </div>
+				<label for="ch_a" class="col-sm-2 control-label">选项A</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ch_a" >
+				</div>
+			</div>
 		  
-		   <div>
 		  	<div class="form-group">
-		    <label for="name">答案</label>
-		    <input type="text" class="form-control" id="name" />
-		  </div>
+				<label for="ch_b" class="col-sm-2 control-label">选项B</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ch_b" >
+				</div>
+			</div>
 		  
-		   <div class="form-group">
-		    <label for="name">解析</label>
-		    <textarea class="form-control"  rows="3"></textarea>
-		  </div>
- 
-		  </div>
+		 
+		  	<div class="form-group">
+				<label for="ch_c" class="col-sm-2 control-label">选项C</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ch_c" >
+				</div>
+			</div>
+		  
+		 
+		  	<div class="form-group">
+				<label for="ch_d" class="col-sm-2 control-label">选项D</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ch_d" >
+				</div>
+			</div>
+		  
+		   
+		  	<div class="form-group">
+				<label for="ch_answer" class="col-sm-2 control-label">答案</label>
+				<div class="col-sm-10">
+					<!--<input type="text" class="form-control" id="phoneNum" >-->
+						<input type="radio" name="optionsRadios" id="optionsRadios2" value="answera">A&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="optionsRadios" id="optionsRadios2" value="answerb">B&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="optionsRadios" id="optionsRadios2" value="answerc">C&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="optionsRadios" id="optionsRadios2" value="answerd">D&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+		  
+		  
+		   <div class="form-group" style="padding-bottom: 50px;">
+				<label for="ch_analyse" class="col-sm-2 control-label">解析</label>
+				<div class="col-sm-10">
+					 <textarea class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+ 			
+ 			<div class="form-group">
+				<label for="ch_tch_id" class="col-sm-2 control-label">教师</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="ch_tch_id" >
+				</div>
+			</div>
+ 			
+		 <div class="form-group">
+		 	<label for="phoneNum" class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<button type="submit" class="btn btn-success btn-block">添加</button>
+				</div>
+			</div>
 		</form>
 	</body>
 </html>
