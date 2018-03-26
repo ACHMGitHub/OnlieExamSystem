@@ -6,14 +6,23 @@
 	   	<link rel="stylesheet" href="css/bootstrap.min.css" />
 
 	    <link href="css/sign.css" rel="stylesheet">
-
+		
+		<style>
+			.pos{
+				position:fixed;
+				margin:10% 0% 5% 80%;
+			}
+			
+			
+		</style>
+		
 		<script type="application/javascript" src="js/jquery-1.11.1.min.js"></script>
 	
 		<script language="JavaScript" src="js/bootstrap.min.js"></script>
 	</head>
-	<body>
+	<body background="img/background.png">
 	<div class="container">
-
+		
       <form class="form-signin">
         <h2 class="form-signin-heading">请登录</h2>
         <input type="text" id="userId" class="form-control" placeholder="用户ID" required autofocus>
@@ -23,20 +32,16 @@
             <input type="checkbox" value="remember-me"> 记住我
           </label>
         </div>
-        <div class="dropdown">
-		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			--用户类型--
-		    <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-		    <li><a href="#">学生</a></li>
-		    <li><a href="#">老师</a></li>
-		    <li><a href="#">管理员</a></li>
-		  </ul>
-		</div>
+       
         <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
       </form>
-
+	<div class="pos">
+		<a href="#">
+			教师
+		</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" >管理员</a>
+	</div>
     </div> 
 	</body>
 </html>
