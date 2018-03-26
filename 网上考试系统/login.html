@@ -8,19 +8,32 @@
 	    <link href="css/sign.css" rel="stylesheet">
 		
 		<style>
-			.pos{
-				position:fixed;
-				margin:10% 0% 5% 80%;
+			
+			body{
+				
+
+			background:url(img/background.png);
+			-moz-background-size:100% 100%; /* 老版本的 Firefox */
+			background-size:100% 100%;
+			background-repeat:no-repeat;
+
 			}
-			
-			
+			.form-signin{
+				margin:100px auto;
+			}
 		</style>
 		
 		<script type="application/javascript" src="js/jquery-1.11.1.min.js"></script>
 	
 		<script language="JavaScript" src="js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript">
+			window.onload=function(){
+			document.body.parentNode.style.overflow="hidden";//隐藏且禁用
+		}
+		</script>
 	</head>
-	<body background="img/background.png">
+	<body>
 	<div class="container">
 		
       <form class="form-signin">
@@ -34,8 +47,7 @@
         </div>
        
         <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
-      </form>
-	<div class="pos">
+        <div class="pos">
 		<a href="#">
 			教师
 		</a>
@@ -43,5 +55,7 @@
 		<a href="#" >管理员</a>
 	</div>
     </div> 
+      </form>
+	
 	</body>
 </html>
