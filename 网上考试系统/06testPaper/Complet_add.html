@@ -9,27 +9,62 @@
 		<link rel="stylesheet" href="../css/examMain.css"/>
 		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
 		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
+		<script language="JavaScript" src="../js/jquery.validate.min.js"></script>
+		
+		<script language="JavaScript" src="../js/additional-methods.js"></script>
+		
+		<script language="JavaScript" src="../js/messages_zh.js"></script>
+		<script>
+				
+			$.validator.setDefaults({
+    submitHandler: function() {
+      alert("提交事件!");
+    }
+});
+$().ready(function() {
+// 在键盘按下并释放及提交后验证提交表单
+  $("#completForm").validate({
+	    rules: {
+	      firstname: "required",
+	  		title:"required",   
+	  		answer:"required",
+	  		analyse:"required",   
+	    },
+	    messages: {
+	      firstname: "请输入您的名字",
+	      title:"必填项",
+	      answer:"必填项",
+	      analyse:"必填项",
+	      },
+	    
+	
+	    
+	});
+});
+
+		</script>
+
 	</head>
 	<body>
 		
-		<form class="form" role="form" >
+		<form class="form" role="form" id="completForm">
 		 <div class="form-group" style="padding-bottom: 50px;">
-				<label for="phoneNum" class="col-sm-2 control-label">题干</label>
+				<label  class="col-sm-2 control-label">题干</label>
 				<div class="col-sm-10">
-					 <textarea class="form-control" rows="3"></textarea>
+					 <textarea class="form-control" rows="3" name="title"></textarea>
 				</div>
 			</div>
 		  <div class="form-group">
-				<label for="phoneNum" class="col-sm-2 control-label">选项D</label>
+				<label for="phoneNum" class="col-sm-2 control-label">答案</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="phoneNum" >
+					<input type="text" class="form-control" id="phoneNum" name="answer">
 				</div>
 			</div>
 		  
 		     <div class="form-group" style="padding-bottom: 50px;">
 				<label for="phoneNum" class="col-sm-2 control-label">解析</label>
 				<div class="col-sm-10">
-					 <textarea class="form-control" rows="3"></textarea>
+					 <textarea class="form-control" rows="3" name="analyse"></textarea>
 				</div>
 			</div>
  			

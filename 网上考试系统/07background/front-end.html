@@ -6,6 +6,21 @@
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		
 		<link rel="stylesheet" href="../css/adminFrame.css" />
+		
+		<link rel="stylesheet" href="../css/test.css" />
+		
+		<style>
+			.testFrame{
+				width:80%;
+				margin:0 auto;
+			}
+			.question{
+				margin:40px 0 40px 0;
+			}
+			.layer{
+				padding:15px 30px ;
+			}
+		</style>
 
 		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
 	
@@ -18,12 +33,51 @@
 		
 		function changeFrameHeight(){
         	var ifm= document.getElementById("mainiframe");
-        	ifm.height=document.documentElement.clientHeight-56; //56是头顶的高度，和网友估计不一样。
+        	ifm.height=document.documentElement.clientHeight-56; 
     	}
     	$(function(){ window.onresize=function(){
-            changeFrameHeight(); }}); //这里不知道是否还要 $(function(){}) 这个闭包吗？后证实不需要
+            changeFrameHeight(); }}); 
 		
-		
+		window.onload=function(){
+     
+       	 	daojishi();
+    	 }
+
+     	 var counttime=5*60;//总秒钟
+     
+     	 function daojishi(){
+      	if(counttime>=0){
+             var ms = counttime%60;//余数 89%60==29秒
+             var mis = Math.floor(counttime/60);//分钟
+             if(mis>=60){
+              var hour=Math.floor(mis/60);
+
+     		mis=Math.floor((counttime-hour*60*60)/60);
+
+              document.getElementById("mss").innerHTML=hour+"小时"+mis+"分"+ms+"秒";
+              
+             }else if(mis>=1){
+              document.getElementById("mss").innerHTML=mis+"分"+ms+"秒"; 
+             }else{
+              document.getElementById("mss").innerHTML=ms+"秒"; 
+             }
+
+   
+              counttime--;
+              vartt =  window.setTimeout("daojishi()",1000);
+   		}else{
+	   	    window.clearTimeout(vartt);
+	       window.confirm("考试时间结束,请单击提交"); 
+	       tijiao();
+      
+   		}
+
+   
+     }
+     
+     function tijiao(){
+        document.forms[0].submit();
+     }
 		
 		
 		</script>
@@ -46,9 +100,11 @@
 	        		
 	        	
 	          <ul class="nav navbar-nav navbar-right">
-	          	<li><a href="../02examFrame/main.html" target="engine"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
+	          <!--	<li><a href="../02examFrame/main.html" target="engine"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
 	            <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;修改密码</a></li>
 	            <li><a href="#"><span class="glyphicon glyphicon-off"></span>&nbsp;注销</a></li>
+	          -->
+	          	<div align="center" class="layer">剩余时间：<label  name="mss" id="mss"></label> </div>
 	          </ul>
 	          
 	        </div>
@@ -56,8 +112,147 @@
 	    </nav>
 
 	    <div class="testFrame">
-	    	<iframe id="mainiframe" src="../06testPaper/TestFrame.html" id="engine" name="engine" frameborder="0" marginwidth="0" marginheight="0" allowtransparency="true" style="background-color:#000" onload="changeFrameHeight()"></iframe>
+	    	<!--<iframe id="mainiframe" src="../06testPaper/TestFrame.html" id="engine" name="engine" frameborder="0" marginwidth="0" marginheight="0" allowtransparency="true" style="background-color:#000" onload="changeFrameHeight()"></iframe>-->
+	    	<div >
+						<h4>一、选择题</h4>
+						<div class="question">
+							<div class="panels">
+								<h4>
+									This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+								</h4>
+							</div>
+							
+							<div>
+								<div class="radio">
+									<div>
+									   <label>
+									      <input type="radio" name="optionsRadios" id="optionsRadios1" 
+									         value="option1" checked>
+									          A、
+									          <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									  
+									</div>
+									<div>
+									   	<label>
+									      <input type="radio" name="optionsRadios" id="optionsRadios2" 
+									         value="option2">
+									         B、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									  
+									</div>
+									<div>
+									   <label>
+									      <input type="radio" name="optionsRadios" id="optionsRadios3" 
+									         value="option3">
+									         C、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									   
+									</div>
+									<div>
+										<label>
+									      	<input type="radio" name="optionsRadios" id="optionsRadios4" 
+									         value="option4">
+									         D、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+										</label>
+										<p></p>
+									</div>
+								   
+								</div>
+							</div>
+							
+							<div class="question">
+							<div class="panels">
+								<h4>
+									This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+								</h4>
+							</div>
+							
+							<div>
+								<div class="radio">
+									<div>
+									   <label>
+									      <input type="radio" name="optionsRadios2" id="optionsRadios1" 
+									         value="option1" checked>
+									          A、
+									          <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									  
+									</div>
+									<div>
+									   	<label>
+									      <input type="radio" name="optionsRadios2" id="optionsRadios2" 
+									         value="option2">
+									         B、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									  
+									</div>
+									<div>
+									   <label>
+									      <input type="radio" name="optionsRadios2" id="optionsRadios3" 
+									         value="option3">
+									         C、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+									   </label>
+									   
+									</div>
+									<div>
+										<label>
+									      	<input type="radio" name="optionsRadios2" id="optionsRadios4" 
+									         value="option4">
+									         D、
+									         <span>八佰伴逼傻逼不上班山东省地方</span>
+										</label>
+										<p></p>
+									</div>
+								   
+								</div>
+							</div>
+						</div>	
+						
+						<div>
+							<h4>二、填空题</h4>
+								<div class="question">
+			  						<div class="panels">
+									<h4>
+										This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+									</h4>
+									</div>
+									<div class="answer">
+									<span class="input input--hoshi">
+										<input class="input__field input__field--hoshi" type="text" id="input-4" />
+										<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+											<span class="input__label-content input__label-content--hoshi">你的答案</span>
+										</label>
+									</span>
+									</div>
+								</div>
+								
+								<div class="question">
+			  						<div class="panels">
+									<h4>
+										This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+									</h4>
+									</div>
+									<div class="answer">
+									<span class="input input--hoshi">
+										<input class="input__field input__field--hoshi" type="text" id="input-4" />
+										<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+											<span class="input__label-content input__label-content--hoshi">你的答案</span>
+										</label>
+									</span>
+									</div>
+								</div>
+						</div>
+		
+	    			<a href="#" class="btn btn-success" style="float: right;">提交</a>
 	    </div>
+	    
+	    
 	    
 	   
 	</body>
