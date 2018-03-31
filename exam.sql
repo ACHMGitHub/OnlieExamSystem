@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `exam` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `exam`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: exam
@@ -29,12 +27,12 @@ CREATE TABLE `tb_admin` (
   `ad_id` varchar(45) NOT NULL,
   `ad_pw` varchar(45) NOT NULL,
   `ad_name` varchar(45) NOT NULL,
-  `ad_sex` varchar(45) NOT NULL,
+  `ad_sex` int(11) NOT NULL,
   `ad_phone` varchar(45) NOT NULL,
   `ad_card` varchar(45) NOT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `ad_id_UNIQUE` (`ad_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +41,7 @@ CREATE TABLE `tb_admin` (
 
 LOCK TABLES `tb_admin` WRITE;
 /*!40000 ALTER TABLE `tb_admin` DISABLE KEYS */;
+INSERT INTO `tb_admin` VALUES (2,'000000','123456','super',1,'123123','21312'),(9,'000001','123456','super',1,'1234567890','1234567890'),(11,'00000000','sadasdasd','fdsfsa',1,'12452875875','4542452452452'),(12,'000002','123456','super',1,'111111111','111111111'),(13,'000003','123456','super',1,'1223121321','12132123123');
 /*!40000 ALTER TABLE `tb_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +61,7 @@ CREATE TABLE `tb_blank` (
   PRIMARY KEY (`uuid`),
   KEY `FK_blank_tch_idx` (`bl_tch_id`),
   CONSTRAINT `FK_blank_tch` FOREIGN KEY (`bl_tch_id`) REFERENCES `tb_teacher` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +70,7 @@ CREATE TABLE `tb_blank` (
 
 LOCK TABLES `tb_blank` WRITE;
 /*!40000 ALTER TABLE `tb_blank` DISABLE KEYS */;
+INSERT INTO `tb_blank` VALUES (1,1,'防火墙通常分为内外网和DMZ三个区域，按照受保护程度，从高到低正确的排列次序为。','内网、DMZ和外网','DMZ是为了解决安装防火墙后外部网络不能访问内部网络服务器的问题，而设立的一个非安全系统与安全系统之间的缓冲区，这个缓冲区位于企业内部网络和外部网络之间的小网络区域内。所以按照受保护程度从高低就显而易见了。'),(2,1,'今年来，在我国出现的各种病毒中，______病毒通过木马形式感染智能手机。','X卧底','“欢乐时光”是一个VB源程序病毒，专门感染.htm、.html、.vbs、.asp和.htt文件。它作为电子邮件的附件，并利用Outlook Express的性能缺陷把自己传播出去，利用一个被人们所知的Microsoft Outlook Express的安全漏洞，可以在你没有运行任何附件时就运行自己。还利用Outlook Express的信纸功能，使自己复制在信纸的Html模板上，以便传播。');
 /*!40000 ALTER TABLE `tb_blank` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,11 +89,12 @@ CREATE TABLE `tb_choice` (
   `ch_b` varchar(255) NOT NULL,
   `ch_c` varchar(255) NOT NULL,
   `ch_d` varchar(255) NOT NULL,
-  `ch_answer` varchar(45) NOT NULL,
+  `ch_answer` varchar(255) NOT NULL,
+  `ch_analyse` varchar(255) NOT NULL,
   PRIMARY KEY (`uuid`),
   KEY `FK_choice_tch_idx` (`ch_tch_id`),
   CONSTRAINT `FK_choice_tch` FOREIGN KEY (`ch_tch_id`) REFERENCES `tb_teacher` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +103,7 @@ CREATE TABLE `tb_choice` (
 
 LOCK TABLES `tb_choice` WRITE;
 /*!40000 ALTER TABLE `tb_choice` DISABLE KEYS */;
+INSERT INTO `tb_choice` VALUES (1,1,'常用的虚拟存储器由_____两级存储器组成。','主存-辅存','主存-网盘 ','Cache-主存','Cache-硬盘','A','虚拟存储器提为了给用户供更大的随机存取空间而采用的一种存储技术。它将内存与外存结合使用，好像有一个容量极大的内存储器，工作速度接近于主存，每位成本又与辅存相近，在整机形成多层次存储系统。所以虚拟存储器有主存和辅存两级存储器组成。'),(2,2,'中断向量可提供______。','I/O设备的端口地址','所传送数据的起始地址','中断服务程序的入口地址','主程序的断电地址','C','计算机发生中断时各个寄存器和程序计数器所指向的内容，或者其中所存的内容．在发生中断时，可以将这些向量暂时的存储在另一个地方，而当执行完别的程序时，可以从暂存的地方将中断向量取出放入原来的位置，从而可以执行原来中断的程序，即中断向量可描述中断服务程序的入口地址。'),(3,1,'为了便于实现多级中断嵌套，使用______来保护断电和现场最有效。','ROM','中断向量表','通用寄存器','堆栈','D','多重中断时，每次中断出现的断点都必须保存起来。中断系统对断点的保存都是在中断周期内由中断隐指令实现的，对用户是透明的。断点可以保存在堆栈中，由于堆栈先进后出的特点，依次将程序的断点压入堆栈中。出栈时，按相反顺序便可准确返回到程序间断处。');
 /*!40000 ALTER TABLE `tb_choice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +118,7 @@ CREATE TABLE `tb_course` (
   `uuid` int(11) NOT NULL AUTO_INCREMENT,
   `coz_name` varchar(45) NOT NULL,
   PRIMARY KEY (`uuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,6 +127,7 @@ CREATE TABLE `tb_course` (
 
 LOCK TABLES `tb_course` WRITE;
 /*!40000 ALTER TABLE `tb_course` DISABLE KEYS */;
+INSERT INTO `tb_course` VALUES (1,'A'),(3,'C'),(4,'D'),(5,'E'),(6,'F');
 /*!40000 ALTER TABLE `tb_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +145,7 @@ CREATE TABLE `tb_grades` (
   PRIMARY KEY (`uuid`),
   KEY `FK_gr_stp_idx` (`gr_stp_id`),
   CONSTRAINT `FK_gr_stp` FOREIGN KEY (`gr_stp_id`) REFERENCES `tb_studenttp` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +154,7 @@ CREATE TABLE `tb_grades` (
 
 LOCK TABLES `tb_grades` WRITE;
 /*!40000 ALTER TABLE `tb_grades` DISABLE KEYS */;
+INSERT INTO `tb_grades` VALUES (1,1,50),(2,2,80);
 /*!40000 ALTER TABLE `tb_grades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +176,7 @@ CREATE TABLE `tb_student` (
   `stu_class` varchar(45) NOT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `stu_id_UNIQUE` (`stu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +185,7 @@ CREATE TABLE `tb_student` (
 
 LOCK TABLES `tb_student` WRITE;
 /*!40000 ALTER TABLE `tb_student` DISABLE KEYS */;
+INSERT INTO `tb_student` VALUES (1,'00000000','123456','Test',1,'12312231123','123456789123456789','班级名称'),(2,'00000001','123456','super',0,'123121321','123123123123123123','class 2');
 /*!40000 ALTER TABLE `tb_student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +207,7 @@ CREATE TABLE `tb_studenttp` (
   KEY `FK_stp_testpaper_idx` (`stp_tp_id`),
   CONSTRAINT `FK_stp_student` FOREIGN KEY (`stp_stu_id`) REFERENCES `tb_student` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_stp_testpaper` FOREIGN KEY (`stp_tp_id`) REFERENCES `tb_testpaper` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,6 +216,7 @@ CREATE TABLE `tb_studenttp` (
 
 LOCK TABLES `tb_studenttp` WRITE;
 /*!40000 ALTER TABLE `tb_studenttp` DISABLE KEYS */;
+INSERT INTO `tb_studenttp` VALUES (1,1,1,'123121213','2018-03-31 14:55:00'),(2,1,1,'123121213','2018-03-31 14:55:00');
 /*!40000 ALTER TABLE `tb_studenttp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +238,7 @@ CREATE TABLE `tb_teacher` (
   `tch_title` varchar(45) NOT NULL,
   PRIMARY KEY (`uuid`),
   UNIQUE KEY `tch_id_UNIQUE` (`tch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,6 +247,7 @@ CREATE TABLE `tb_teacher` (
 
 LOCK TABLES `tb_teacher` WRITE;
 /*!40000 ALTER TABLE `tb_teacher` DISABLE KEYS */;
+INSERT INTO `tb_teacher` VALUES (1,'0000','1234','super',1,'15123344','212132456','教授'),(2,'1','123456','super',1,'123213213','21321321','教授');
 /*!40000 ALTER TABLE `tb_teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +268,7 @@ CREATE TABLE `tb_testpaper` (
   PRIMARY KEY (`uuid`),
   KEY `FK_testpaper_course_idx` (`tp_coz_id`),
   CONSTRAINT `FK_testpaper_course` FOREIGN KEY (`tp_coz_id`) REFERENCES `tb_course` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,6 +277,7 @@ CREATE TABLE `tb_testpaper` (
 
 LOCK TABLES `tb_testpaper` WRITE;
 /*!40000 ALTER TABLE `tb_testpaper` DISABLE KEYS */;
+INSERT INTO `tb_testpaper` VALUES (1,1,120,100,10,10);
 /*!40000 ALTER TABLE `tb_testpaper` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,14 +290,14 @@ DROP TABLE IF EXISTS `tb_tpblank`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_tpblank` (
   `uuid` int(11) NOT NULL AUTO_INCREMENT,
-  `tbk_tp_id` int(11) NOT NULL,
-  `tbk_bl_id` int(11) NOT NULL,
+  `tpb_tp_id` int(11) NOT NULL,
+  `tpb_bl_id` int(11) NOT NULL,
   PRIMARY KEY (`uuid`),
-  KEY `FK_testpaper_idx` (`tbk_tp_id`),
-  KEY `FK_blank_idx` (`tbk_bl_id`),
-  CONSTRAINT `FK_tbk_blank` FOREIGN KEY (`tbk_bl_id`) REFERENCES `tb_blank` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_tbk_testpaper` FOREIGN KEY (`tbk_tp_id`) REFERENCES `tb_testpaper` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_testpaper_idx` (`tpb_tp_id`),
+  KEY `FK_blank_idx` (`tpb_bl_id`),
+  CONSTRAINT `FK_tbk_blank` FOREIGN KEY (`tpb_bl_id`) REFERENCES `tb_blank` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tbk_testpaper` FOREIGN KEY (`tpb_tp_id`) REFERENCES `tb_testpaper` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,6 +306,7 @@ CREATE TABLE `tb_tpblank` (
 
 LOCK TABLES `tb_tpblank` WRITE;
 /*!40000 ALTER TABLE `tb_tpblank` DISABLE KEYS */;
+INSERT INTO `tb_tpblank` VALUES (1,1,1),(2,1,1),(3,1,1),(4,1,1),(5,1,2);
 /*!40000 ALTER TABLE `tb_tpblank` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +326,7 @@ CREATE TABLE `tb_tpchoice` (
   KEY `FK_choice_idx` (`tpc_ch_id`),
   CONSTRAINT `FK_tpc_choice` FOREIGN KEY (`tpc_ch_id`) REFERENCES `tb_choice` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_tpc_testpaper` FOREIGN KEY (`tpc_tp_id`) REFERENCES `tb_testpaper` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,6 +335,7 @@ CREATE TABLE `tb_tpchoice` (
 
 LOCK TABLES `tb_tpchoice` WRITE;
 /*!40000 ALTER TABLE `tb_tpchoice` DISABLE KEYS */;
+INSERT INTO `tb_tpchoice` VALUES (1,1,1),(2,1,1),(3,1,2),(4,1,3);
 /*!40000 ALTER TABLE `tb_tpchoice` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -338,4 +348,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-23 17:08:42
+-- Dump completed on 2018-03-31 17:21:22
