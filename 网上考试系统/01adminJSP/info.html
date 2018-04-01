@@ -9,12 +9,9 @@
 		
 		<style type="text/css">
 			input{
-				width: 150px;
+				width: 105px;
 			}
-			iframe{
-				
-				height: 500px;
-			}
+			
 		</style>
 		
 		
@@ -22,53 +19,11 @@
 	
 		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
 		
-		<script type="text/javascript" src="../js/dcalendar.picker.js"></script>
 		
-		<script type="text/javascript">
-			$(function(){
-				
-				$('#mydatepicker2').dcalendarpicker({
-					format:'yyyy-mm-dd'
-				}); 
-				$('#mydatepicker1').dcalendarpicker({
-					format:'yyyy-mm-dd'
-				}); 
-				
-				
-				
-			})
-			
-			
-			
-			function check(){
-				var grade=parseFloat( $('#grade1').val());
-				grade>=0&&grade<=100?$('#grade1').css({"border-color":"","border-style":"","border-size":""}):$('#grade1').css({"border-color":"red","border-style":"solid","border-size":"1px"});					
-			};
-			function check2(){
-				var grade=parseFloat( $('#grade2').val());
-				grade>=0&&grade<=100?$('#grade2').css({"border-color":"","border-style":"","border-size":""}):$('#grade2').css({"border-color":"red","border-style":"solid","border-size":"1px"});					
-			};
-		</script>
 	</head>
 	<body>
-		<div class="container">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-					
-					<div>
-						<form action="">
-							<label>起始时间：</label><input id='mydatepicker1' type='text'/>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<label>结束时间：</label><input id='mydatepicker2' type='text'/>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<label>成绩区间：</label><input id='grade1' class="grade" type='text' onchange="check();"/>~<input id='grade2' class="grade" type='text' onchange="check2();"/>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="submit" class="btn btn-sm btn-success">查询</button>
-						</form>
-					</div>
-					
-					
-					<!--<table class="table table-hover">
+		<div class="frameContent">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>
@@ -193,8 +148,5 @@
 					</ul>
 					</div>
 				</div>
-			</div>
-		</div>-->
-		<iframe src="info.html" frameborder="0" class="col-md-12 column" ></iframe>
 	</body>
 </html>
