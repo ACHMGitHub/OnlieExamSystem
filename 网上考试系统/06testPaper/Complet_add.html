@@ -7,6 +7,23 @@
 		<link rel="stylesheet" href="../css/test.css" />
 		<link rel="stylesheet" href="../css/addChangeCss.css"/>
 		<link rel="stylesheet" href="../css/examMain.css"/>
+		
+		<style>
+			.form-group{
+				height: 60px;
+				
+			}
+			
+			#completForm{
+				width: 800px;
+			}
+			body{
+				display: flex;
+				flex:90% 10%;
+			}
+		
+			
+		</style>
 		<script type="application/javascript" src="../js/jquery-1.11.1.min.js"></script>
 		<script language="JavaScript" src="../js/bootstrap.min.js"></script>
 		<script language="JavaScript" src="../js/jquery.validate.min.js"></script>
@@ -77,5 +94,14 @@ $().ready(function() {
 			</div>
 
 		 </form>
+		 
+		 <form action="">
+			<div class="form-group childElement">
+				    <label for="exampleInputFile">选择文件</label>
+				    <input type="file" id="exampleInputFile">
+				    <p class="help-block">Example block-level help text here.</p>
+				    <button type="button" class="btn btn-success">提交</button>
+			</div>
+		</form>
 	</body>
 </html>
