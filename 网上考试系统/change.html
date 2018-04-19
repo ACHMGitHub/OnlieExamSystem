@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<style>
+			input{ 
+				border-width: 0; 
+			}
+			
+			
+		</style>
+		<script type="application/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script language="JavaScript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$(".change").click(
+					function(){
+						$("input").removeAttr("readonly");
+						$("input :first").onFocus;
+						$(".change").hide();
+						$(".up").toggle();
+						$("input").css("border-width","1");
+					}			
+				)
+				$(".cancle").click(
+					function(){
+						$("input").attr("readonly","readonly")
+						$(".change").toggle();
+						$(".up").toggle();
+						$("input").css("border-width","0");
+					}			
+				)
+				
+			});
+		</script>
+		
+	</head>
+	<body>
+		<table class="table">
+			<tbody>				
+				<tr>
+					<td>
+						<input type="text" value="一" readonly="readonly" /></td>
+						<td><input type="text" value="一" readonly="readonly"/></td>
+						<td><input type="text" value="一" readonly="readonly"/></td>
+						<td><input type="text" value="一" readonly="readonly"/></td>
+						<td><input type="text" value="一" readonly="readonly"/></td>
+						
+						<td>
+							<button type="button" class="btn btn-success change">更改</button>
+						</td>
+						<td>
+							<button type="button" class="btn btn-success up cancle" style="display: none;">取消</button>
+							<button type="button" class="btn btn-success up" style="display: none;">提交</button>
+						</td>
+				</tr>				
+			</tbody>
+		</table>
+	</body>
+</html>
