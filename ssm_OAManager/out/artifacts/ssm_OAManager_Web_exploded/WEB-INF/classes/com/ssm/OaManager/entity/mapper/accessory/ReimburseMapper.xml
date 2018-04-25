@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.accessory.Reimburse">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.accessory.Reimburse"
+		id="ReimMap">
+		<id column="re_id" property="reId"></id>
+		<result column="re_applicationDate" property="reApplicateionDate" />
+		<result column="re_content" property="reContent" />
+		<result column="re_money" property="reMoney" />
+		<result column="re_approvestatus" property="reApproveStatus" />
+
+		<association property="reimType"
+			resultMap="com.ssm.OaManager.entity.accessory.ReimType.ReimTypeMap"></association>
+		<association property="user"
+			resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+	</resultMap>
+
+	<!-- 表 -->
+	<sql id="table">
+		TB_REIMBURSE
+	</sql>
+
+	<!-- 查询所有记录 -->
+	<select id="findAll" resultMap="ReimMap">
+		select
+		rb.*,rt.reimType_name,rt.reimType_descripti from tb_reimburse rb inner
+		join tb_reimtype rt on rb.reimtype_id = rt.reimtype_id
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="findByPage" resultMap="ReimMap">
+		select
+		rb.*,rt.reimType_name,rt.reimType_descripti from tb_reimburse rb inner
+		join tb_reimtype rt on rb.reimtype_id = rt.reimtype_id
+		where 1=1 limit
+		#{firstPage} ,#{pageSize}
+	</select>
+
+
+	<select id="findByReimburse" parameterType="com.ssm.OaManager.entity.accessory.Reimburse"
+		resultMap="ReimMap">
+		<!-- select rb.*,rt.reimType_name,rt.reimType_descripti from tb_reimburse 
+			rb inner join tb_reimtype rt on rb.reimtype_id = rt.reimtype_id -->
+		select * from tb_reimburse rb inner join tb_reimtype rt on
+		rb.reimtype_id = rt.reimtype_id inner join tb_user u on u.user_id =
+		rb.user_id inner join tb_emplyee e on e.emp_id = u.emp_id inner join
+		tb_department d on e.dept_id = d.dept_id inner join tb_position p on
+		e.pos_id = p.pos_id
+		<where>
+			<if test="reId!=null">
+				rb.re_id = #{reId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 添加 -->
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="user.userId!=null">
+				user_id,
+			</if>
+			<if test="reApplicateionDate!=null">
+				re_ApplicationDate,
+			</if>
+			<if test="reContent!=null">
+				re_Content,
+			</if>
+			<if test="reMoney!=null">
+				re_Money,
+			</if>
+			<if test="reApproveStatus!=null">
+				re_ApproveStatus,
+			</if>
+			<if test="reimType.reimTypeId!=null">
+				reimtype_id,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="user.userId!=null">
+				#{user.userId,jdbcType=INTEGER},
+			</if>
+			<if test="reApplicateionDate!=null">
+				#{reApplicateionDate},
+			</if>
+			<if test="reContent!=null">
+				#{reContent},
+			</if>
+			<if test="reMoney!=null">
+				#{reMoney},
+			</if>
+			<if test="reApproveStatus!=null">
+				#{reApproveStatus},
+			</if>
+			<if test="reimType.reimTypeId!=null">
+				#{reimType.reimTypeId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 插入数据并返回主键 -->
+	<insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="reId"
+		parameterType="com.ssm.OaManager.entity.accessory.Reimburse">
+		INSERT INTO
+		<include refid="table" />
+		(
+		<include refid="key" />
+		)
+		VALUES
+		(
+		<include refid="value" />
+		)
+	</insert>
+</mapper>

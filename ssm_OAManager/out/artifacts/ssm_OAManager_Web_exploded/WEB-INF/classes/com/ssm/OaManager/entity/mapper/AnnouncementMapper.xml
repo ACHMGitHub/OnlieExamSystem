@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.Announcement">
+	<resultMap id="AnnouncementMap" type="com.ssm.OaManager.entity.Announcement">
+		<id column="am_id" property="amId" jdbcType="INTEGER" />
+		<result column="am_theme" property="amTheme" jdbcType="VARCHAR" />
+		<result column="am_conten" property="amConten" />
+		<result column="am_date" property="amDate" jdbcType="DATE" />
+		<result column="am_state" property="amState" jdbcType="INTEGER" />
+		<association property="user"
+			resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+	</resultMap>
+	<!-- 删除一条数据 -->
+	<delete id="deleteById" parameterType="java.io.Serializable">
+		delete from
+		tb_announcement where
+		am_id=#{amId}
+	</delete>
+
+	<!-- 通过审核状态查询公告信息 -->
+	<select id="findByState" resultMap="AnnouncementMap">
+		select
+		a.am_id,a.am_theme,a.am_conten,a.user_id,a.am_date,a.am_state from
+		tb_announcement a where a.am_state=1
+	</select>
+	<!-- 查询最新的公告 -->
+	<select id="findByNewnotice" resultMap="AnnouncementMap">
+		SELECT * FROM tb_announcement
+		WHERE am_state=1 and am_date    <![CDATA[ <=   SYSDATE()   ]]>
+		ORDER BY am_date desc LIMIT 1
+	</select>
+
+	<!--通过id查询一条数据 -->
+	<select id="findById" parameterType="java.io.Serializable"
+		resultMap="AnnouncementMap">
+		select
+		a.am_id,a.am_theme,a.am_conten,a.user_id,a.am_date,a.am_state from
+		tb_announcement a where a.am_id=#{amId}
+	</select>
+
+	<!-- 添加一条数据 -->
+	<insert id="insert" parameterType="com.ssm.OaManager.entity.Announcement">
+		insert into tb_announcement
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="amId != null">
+				am_id,
+			</if>
+			<if test="amTheme != null">
+				am_theme,
+			</if>
+			<if test="user.userId != null">
+				user_id,
+			</if>
+			<if test="amDate != null">
+				am_date,
+			</if>
+			<if test="amConten != null">
+				am_conten,
+			</if>
+			<if test="amState != null">
+				am_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="amId != null">
+				#{amId,jdbcType=INTEGER},
+			</if>
+			<if test="amTheme != null">
+				#{amTheme,jdbcType=VARCHAR},
+			</if>
+			<if test="user.userId != null">
+				#{user.userId,jdbcType=INTEGER},
+			</if>
+			<if test="amDate != null">
+				#{amDate,jdbcType=DATE},
+			</if>
+			<if test="amConten != null">
+				#{amConten,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="amState != null">
+				#{amState,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.ssm.OaManager.entity.Announcement">
+		update tb_announcement
+		<set>
+			<if test="amTheme != null">
+				am_theme = #{amTheme,jdbcType=VARCHAR},
+			</if>
+			<if test="user.userId != null">
+				user_id = #{user.userId,jdbcType=INTEGER},
+			</if>
+			<if test="amDate != null">
+				am_date = #{amDate,jdbcType=DATE},
+			</if>
+			<if test="amConten != null">
+				am_conten = #{amConten,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="amState != null">
+				am_state = #{amState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where am_id = #{amId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询全部数据 -->
+	<select id="findAll" resultMap="AnnouncementMap">
+		SELECT a.*,e.emp_name FROM
+		tb_announcement a left JOIN tb_user u on a.user_id = u.user_id LEFT
+		JOIN tb_emplyee e on e.emp_id=u.emp_id
+	</select>
+
+	<!-- 查询记录数 -->
+	<select id="findCount" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultType="int">
+
+	</select>
+
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.workflow.StepInstance">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.workflow.StepInstance"
+		id="StepInstanceMap">
+		<id column="step_instance_id" property="stepInstanceId"></id>
+		<result column="start_date" property="startDate" />
+		<result column="finish_date" property="finishDate" />
+		<result column="status" property="status" />
+		<result column="commit" property="commit" />
+
+		<association property="step"
+			resultMap="com.ssm.OaManager.entity.workflow.StepTemplate.StepMap"></association>
+		<association property="flowInstance"
+			resultMap="com.ssm.OaManager.entity.workflow.FlowInstance.FlowInstanceMap"></association>
+		<association property="emp"
+			resultMap="com.ssm.OaManager.entity.hrm.Employee.employeeMap"></association>
+		<association property="official"
+			javaType="com.ssm.OaManager.entity.official.Official">
+			<id column="official_id" property="offiId"></id>
+			<result column="offi_name" property="offiName" />
+			<result column="offi_date" property="offiDate" />
+			<result column="offi_state" property="offiState" />
+			<result column="accessory_name" property="accessoryName" />
+			<result column="offi_descripti" property="offiDescripti" />
+		</association>
+	</resultMap>
+
+	<!-- 表 -->
+	<sql id="table">
+		tb_step_instance
+	</sql>
+
+	<!-- 通过ID查询 -->
+	<select id="findById" parameterType="int" resultMap="StepInstanceMap">
+		SELECT * FROM
+		<include refid="table"></include>
+		<where>
+			<if test="stepInstanceId!=null">
+				step_instance_id = #{stepInstanceId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过ID查询 -->
+	<select id="findByOffiId" parameterType="int" resultMap="StepInstanceMap">
+		SELECT * FROM
+		<include refid="table"></include>
+		<where>
+			<if test="offiId!=null">
+				official_id = #{offiId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过员工查询 -->
+	<select id="findAllByEmp" parameterType="com.ssm.OaManager.entity.hrm.Employee"
+		resultMap="StepInstanceMap">
+		SELECT * FROM
+		<include refid="table"></include>
+		<where>
+			<if test="empId!=null">
+				emp_id = #{empId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过公文查询 -->
+	<select id="findStepInstancesByOfficial" parameterType="com.ssm.OaManager.entity.official.Official"
+		resultMap="StepInstanceMap">
+		SELECT * FROM
+		<include refid="table"></include>
+		<where>
+			<if test="offiId!=null">
+				official_id = #{offiId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="List">
+		INSERT INTO
+		<include refid="table"></include>
+		(step_id,start_date,finish_date,status,emp_id,
+		official_id,flow_instance_id,commit)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.step.stepId,jdbcType=INTEGER},
+			#{item.startDate},#{item.finishDate},
+			#{item.status},#{item.emp.empId,jdbcType=INTEGER},
+			#{item.official.offiId,jdbcType=INTEGER},
+			#{item.flowInstance.flowInstanceId,jdbcType=INTEGER},
+			#{item.commit})
+		</foreach>
+	</insert>
+	
+	<!-- 修改步骤实例状态 -->
+	<update id="update" parameterType="com.ssm.OaManager.entity.workflow.StepInstance">
+		UPDATE <include refid="table"></include>
+		<set>
+		<trim suffixOverrides=",">
+			<if test="status!=null">
+				status = #{status},
+			</if>
+			<if test="commit!=null">
+				commit = #{commit},
+			</if>
+		</trim>
+		</set>
+		<where>
+			<if test="stepInstanceId">
+				step_instance_id = #{stepInstanceId}
+			</if>
+		</where>
+	</update>
+	
+	<!-- 批量修改 -->
+	<update id="updateByStepInstances" parameterType="List">
+		UPDATE <include refid="table"></include>
+		<set>
+				status = 2
+		</set>
+		<where>
+				step_instance_id in
+		</where>
+		<foreach collection="list" item="item" index="index"
+			open="(" close=")" separator=",">
+			#{item.stepInstanceId,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+	<!-- 通过步骤模型查询 -->
+	<select id="findByStepTemplates" parameterType="List"
+		resultMap="StepInstanceMap">
+		SELECT * FROM
+		<include refid="table"></include>
+		<where>
+				STEP_ID IN
+		</where>
+		<foreach collection="list" item="item" index="index"
+			open="(" close=")" separator=",">
+			#{item.stepId,jdbcType=INTEGER}
+		</foreach>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteBatch" parameterType="List">
+		DELETE FROM <include refid="table"></include>
+		<where>
+			STEP_INSTANCE_ID IN
+		</where>
+		<foreach collection="list" item="item" index="index"
+			open="(" close=")" separator=",">
+			#{item.stepInstanceId}
+		</foreach>
+	</delete>
+	
+</mapper>

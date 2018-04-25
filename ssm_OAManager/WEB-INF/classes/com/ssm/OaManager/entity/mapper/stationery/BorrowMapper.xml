@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.stationery.Borrow" >
+  <resultMap id="BorrowMap" type="com.ssm.OaManager.entity.stationery.Borrow" >
+    <id column="borrow_id" property="borrowId" jdbcType="INTEGER" />
+    <result column="borrow_status" property="borrowStatus" jdbcType="INTEGER" />
+    <result column="giveback_status" property="givebackStatus" jdbcType="INTEGER" />
+    <result column="borrow_amount" property="borrowAmount" jdbcType="INTEGER" />
+    <result column="borrow_descripti" property="borrowDescripti" jdbcType="VARCHAR" />
+    
+    <association property="stationery"
+	    resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap"></association>
+    <association property="user"
+	    resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+  </resultMap>
+  
+    <sql id="table">
+		tb_borrow
+	</sql>
+	
+	<!-- 列名 -->
+	 <sql id="key">
+	     <!-- 去掉最后一个, -->
+	     <trim suffixOverrides=",">
+	         <if test="user.userId!=null">
+	             user_id,
+	         </if>
+	         <if test="stationery.stationeryId!=null">
+	             stationery_id,
+	         </if>
+	         <if test="borrowStatus!=null">
+	              borrow_status,
+	         </if>
+	         <if test="givebackStatus!=null">
+	              giveback_status,
+	         </if>
+	         <if test="borrowAmount!=null">
+	              borrow_amount,
+	         </if>
+	         <if test="borrowDescripti!=null">
+	              borrow_descripti,
+	         </if>
+	          <if test="oparateUser.userId!=null">
+	              oparate_user,
+	         </if>
+	     </trim>
+	 </sql>
+	 
+	 <!-- 列值 -->
+	 <sql id="value">
+	    <!-- 去掉最后一个, -->
+	    <trim suffixOverrides=",">
+	        <if test="user.userId!=null">
+	             #{user.userId,jdbcType=INTEGER},
+	         </if>
+	         <if test="stationery.stationeryId!=null">
+	             #{stationery.stationeryId,jdbcType=INTEGER},
+	         </if>
+	         <if test="borrowStatus!=null">
+	              #{borrowStatus},
+	         </if>
+	         <if test="givebackStatus!=null">
+	              #{givebackStatus},
+	         </if>
+	         <if test="borrowAmount!=null">
+	              #{borrowAmount},
+	         </if>
+	         <if test="borrowDescripti!=null">
+	              #{borrowDescripti},
+	         </if>
+	           <if test="oparateUser.userId!=null">
+	              #{oparateUser.userId},
+	         </if>
+	    </trim>
+	 </sql>
+  
+  <!-- 添加 -->
+  <insert id="insert" parameterType="com.ssm.OaManager.entity.stationery.Borrow">
+       insert into <include refid="table"/>(<include refid="key"/>)values(<include refid="value"/>)
+  </insert>
+  
+  <!-- 根据ID删除 -->
+  <delete id="deleteById" parameterType="java.io.Serializable">
+       delete from tb_borrow where borrow_id=#{borrowId}
+  </delete>
+  <!-- 修改 -->
+  <update id="update" parameterType="com.ssm.OaManager.entity.stationery.Borrow">
+      update tb_borrow
+      <set>
+        <trim suffixOverrides=",">
+          <!-- 去掉最后一个, -->
+         <if test="user.userId!=null">
+             user_id=#{user.userId},
+         </if>
+         <if test="stationery.stationeryId!=null">
+             stationery_id=#{stationery.stationeryId},
+         </if>
+         <if test="borrowStatus!=null">
+	         borrow_status=#{borrowStatus},
+         </if>
+         <if test="givebackStatus!=null">
+             giveback_status=#{givebackStatus},
+         </if>
+         <if test="borrowAmount!=null">
+             borrow_amount=#{borrowAmount},
+         </if>
+         <if test="borrowDescripti!=null">
+             borrow_descripti=#{borrowDescripti},
+         </if>
+        </trim> 
+      </set>
+      where borrow_id=#{borrowId}
+  </update>
+  <!-- 查询所有员工 -->
+  <select id="findAll" resultMap="BorrowMap">
+      select * from tb_borrow b 
+      left join tb_user u on b.user_id = u.user_id 
+      left join tb_stationery s on s.stationery_id = b.stationery_id
+       left join tb_user u2 on u2.user_id=b.oparate_user
+  </select>
+  
+<!--通过id查询一条数据 -->
+	<select id="findById" parameterType="java.io.Serializable"
+		resultMap="BorrowMap">
+		 select * from tb_borrow b 
+     	 left join tb_user u on b.user_id = u.user_id 
+     	 left join tb_stationery s on s.stationery_id = b.stationery_id
+		where
+		b.borrow_id=#{borrowId}
+	</select>
+	
+		<!-- 分页查询数据 -->
+	<select id="findByPage" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultMap="BorrowMap">
+		 select * from tb_borrow b 
+     	 left join tb_user u on b.user_id = u.user_id 
+     	 left join tb_stationery s on s.stationery_id = b.stationery_id
+		where 1=1
+		limit 0 ,10
+	</select>
+	
+	<!-- 查询记录数 -->
+	<select id="findCount" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultType="int">
+		select
+		count(*)
+		from tb_borrow
+	</select>
+</mapper>

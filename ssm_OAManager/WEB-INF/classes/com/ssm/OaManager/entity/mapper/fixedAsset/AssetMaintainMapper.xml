@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper  namespace="com.ssm.OaManager.entity.fixedAsset.AssetMaintain"> 
+
+			<resultMap type="com.ssm.OaManager.entity.fixedAsset.AssetMaintain" id="assetMaintainMap">
+					<id property="maintainId"  column="maintain_id"/>
+					<result  property="maintainDate"  column="maintain_date"/>
+					<result  property="maintainDescripti"  column="maintain_descripti"/>
+					
+					<association property="asset"  resultMap="com.ssm.OaManager.entity.fixedAsset.Asset.assetMap"></association>
+					<association property="user"  resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+					<association property="maintainType"  resultMap="com.ssm.OaManager.entity.fixedAsset.MaintainType.maintainTypeMap"></association>
+			</resultMap>
+			
+						<sql id="key">
+						    <!-- 去掉最后一个, -->
+						    <trim suffixOverrides=",">
+						        <if test="maintainDate!=null">
+						            maintain_date,
+						        </if>
+						        <if test="maintainDescripti!=null">
+						            maintain_descripti,
+						        </if>
+						        <if test="asset.assetNo!=null">
+						            asset_no,
+						        </if>
+						        <if test="user.userId!=null">
+						            user_id,
+						        </if>
+						        <if test="maintainType.maintainTypeId!=null">
+						            maintaintype_id,
+						        </if>
+						    </trim>
+					 </sql>
+					 
+					 <sql id="value">
+						    <!-- 去掉最后一个, -->
+						    <trim suffixOverrides=",">
+						       <if test="maintainDate!=null">
+						            #{maintainDate},
+						        </if>
+						        <if test="maintainDescripti!=null">
+						            #{maintainDescripti},
+						        </if>
+						        <if test="asset.assetNo!=null">
+						            #{asset.assetNo},
+						        </if>
+						        <if test="user.userId!=null">
+						            #{user.userId},
+						        </if>
+						        <if test="maintainType.maintainTypeId!=null">
+						            #{maintainType.maintainTypeId},
+						        </if>
+						    </trim>
+				  </sql>
+			<!-- 添加数据 -->
+			<insert id="insert"  parameterType="com.ssm.OaManager.entity.fixedAsset.AssetMaintain">
+			 		insert into tb_assetmaintain(<include refid="key"/>) values(<include refid="value"/>)
+			</insert>
+			
+			<!-- 修改数据 -->
+			<update id="update"   parameterType="com.ssm.OaManager.entity.fixedAsset.AssetMaintain">
+					update tb_assetmaintain  
+						<set>
+						        <if test="maintainDate!=null">
+						            maintain_date=#{maintainDate},
+						        </if>
+						        <if test="maintainDescripti!=null">
+						            maintain_descripti=#{maintainDescripti},
+						        </if>
+						        <if test="asset.assetNo!=null">
+						            asset_no=#{asset.assetNo},
+						        </if>
+						        <if test="user.userId!=null">
+						            user_id=#{user.userId},
+						        </if>
+						        <if test="maintainType.maintainTypeId!=null">
+						            maintaintype_id=#{maintainType.maintainTypeId},
+						        </if>
+    					</set>
+    				where maintain_id = #{maintainId}
+			</update>
+			
+			<!-- 删除一条数据 -->
+			<delete id="deleteById"  parameterType="java.io.Serializable">
+								delete from  tb_assetmaintain where maintain_id = #{maintainId}
+			</delete>
+			
+			<!-- 批量删除 -->
+			<delete id="delete"  parameterType="java.util.Map">
+					delete from  tb_assetmaintain where maintain_id in
+								 <!-- foreach用于迭代数组元素
+							         open表示开始符号
+							         close表示结束符合
+							         separator表示元素间的分隔符
+							         item表示迭代的数组，属性值可以任意，但提倡与方法的数组名相同
+							         #{ids}表示数组中的每个元素值
+							     -->
+				    <foreach collection="ids" open="(" close=")" separator="," item="id">
+				        		#{id}
+				    </foreach>
+			</delete>
+			
+			<!--通过id查询一条数据 -->
+			<select id="findById"  parameterType="java.io.Serializable"  resultMap="assetMaintainMap">
+				select * from tb_assetmaintain m inner join tb_asset a on
+					 m.asset_no = a.asset_no inner join tb_user u on u.user_id = m.user_id
+					inner join tb_maintaintype t on t.maintaintype_id = m.maintaintype_id
+					 left join tb_emplyee e on u.emp_id = e.emp_id
+					where maintain_id = #{maintainId}
+			</select>
+
+			<!-- 查询全部数据 -->
+			<select id="findAll"  resultMap="assetMaintainMap" >
+			  	select * from tb_assetmaintain m inner join tb_asset a on
+					 m.asset_no = a.asset_no inner join tb_user u on u.user_id = m.user_id
+					inner join tb_maintaintype t on 
+					t.maintaintype_id = m.maintaintype_id left join 
+					tb_emplyee e on u.emp_id = e.emp_id
+			</select>
+			
+			<!-- 分页查询数据 -->
+			<select id="findByPage"   parameterType="com.ssm.OaManager.utils.PageBean"  resultMap="assetMaintainMap" >
+					select * from tb_assetmaintain m inner join tb_asset a on
+					 m.asset_no = a.asset_no inner join tb_user u on u.user_id = m.user_id
+					inner join tb_maintaintype t on t.maintaintype_id = m.maintaintype_id
+					where 1=1  limit  #{firstPage} ,#{pageSize}
+			</select>
+			
+			<!-- 查询记录数 -->
+			<select id="findCount"  parameterType="com.ssm.OaManager.utils.PageBean"  resultType="int">
+					select 
+			            count(*)
+			         from tb_assetmaintain  u
+			</select>
+			
+						<!--通过id查询一条数据 -->
+			<select id="findBymaintaintypeId"  parameterType="java.io.Serializable"  resultMap="assetMaintainMap">
+				select * from tb_assetmaintain m inner join tb_asset a on
+					 m.asset_no = a.asset_no inner join tb_user u on u.user_id = m.user_id
+					inner join tb_maintaintype t on t.maintaintype_id = m.maintaintype_id
+					 left join tb_emplyee e on u.emp_id = e.emp_id
+					where m.maintaintype_id = #{maintaintypeId}
+			</select>
+</mapper>

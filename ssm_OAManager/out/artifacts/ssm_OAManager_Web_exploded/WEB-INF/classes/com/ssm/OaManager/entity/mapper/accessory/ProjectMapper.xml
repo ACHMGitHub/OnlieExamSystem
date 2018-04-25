@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.accessory.ProjectAsk">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.accessory.ProjectAsk"
+		id="ProjectAskMap">
+		<id column="project_id" property="projectId"></id>
+		<result column="project_name" property="projectName" />
+		<result column="project_content" property="projectContent" />
+		<result column="project_date" property="projectDate" />
+		<result column="project_money" property="projectMoney" />
+
+		<association property="user" 
+			resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+	</resultMap>
+
+	<!-- 表 -->
+	<sql id="table">
+		TB_PROJECT_ASK
+	</sql>
+	
+	<!-- 通过对象进行查找 -->
+	<select id="findByProject" parameterType="com.ssm.OaManager.entity.accessory.ProjectAsk"
+		resultMap="ProjectAskMap">
+		SELECT * FROM
+		<include refid="table" />
+		<where>
+			<if test="projectId!=null">
+				project_id = #{projectId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 添加 -->
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="projectName!=null">
+				project_name,
+			</if>
+			<if test="projectDate!=null">
+				project_date,
+			</if>
+			<if test="projectContent!=null">
+				project_content,
+			</if>
+			<if test="projectMoney!=null">
+				project_money,
+			</if>
+			<if test="user.userId!=null">
+				user_id,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="projectName!=null">
+				#{projectName},
+			</if>
+			<if test="projectDate!=null">
+				#{projectDate},
+			</if>
+			<if test="projectContent!=null">
+				#{projectContent},
+			</if>
+			<if test="projectMoney!=null">
+				#{projectMoney},
+			</if>
+			<if test="user.userId!=null">
+				#{user.userId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 插入数据并返回主键 -->
+	<insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="projectId"
+		parameterType="com.ssm.OaManager.entity.accessory.ProjectAsk">
+		INSERT INTO
+		<include refid="table" />
+		(
+		<include refid="key" />
+		)
+		VALUES
+		(
+		<include refid="value" />
+		)
+	</insert>
+</mapper>

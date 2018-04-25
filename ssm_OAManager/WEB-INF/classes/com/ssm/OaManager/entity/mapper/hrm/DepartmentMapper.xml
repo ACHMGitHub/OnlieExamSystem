@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.hrm.Department">
+	<!-- 部门信息类 映射表 -->
+	<resultMap type="com.ssm.OaManager.entity.hrm.Department" id="DeptInfoMap">
+		<id column="DEPT_ID" property="deptId" />
+		<result column="DEPT_Number" property="deptNumber" />
+		<result column="DEPT_Name" property="deptName" />
+		<result column="dept_DESCRIPTI" property="deptDescripti" />
+		
+	</resultMap>
+
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="deptNumber!=null">
+				DEPT_Number,
+			</if>
+			<if test="deptName!=null">
+				DEPT_Name,
+			</if>
+			<if test="deptDescripti!=null">
+				dept_DESCRIPTI,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="deptNumber!=null">
+				#{deptNumber},
+			</if>
+			<if test="deptName!=null">
+				#{deptName},
+			</if>
+			<if test="deptDescripti!=null">
+				#{deptDescripti},
+			</if>
+		</trim>
+	</sql>
+	<!-- 添加数据 -->
+	<insert id="insert" parameterType="com.ssm.OaManager.entity.hrm.Department">
+		insert into tb_department(
+		<include refid="key" />
+		) values(
+		<include refid="value" />
+		)
+	</insert>
+	
+	<!-- 修改部门 -->
+	<update id="update" parameterType="com.ssm.OaManager.entity.hrm.Department">
+		update tb_department
+		<set>
+			<if test="deptNumber!=null">
+				DEPT_Number=#{deptNumber},
+			</if>
+			<if test="deptName!=null">
+				DEPT_Name=#{deptName},
+			</if>
+			<if test="deptDescripti!=null">
+				dept_DESCRIPTI=#{deptDescripti},
+			</if>
+		</set>
+
+		where DEPT_ID = #{deptId}
+	</update>
+	
+	<!-- 根据ID删除 -->
+	<delete id="deleteById" parameterType="java.io.Serializable">
+		delete from tb_department where DEPT_ID = #{deptId}
+	</delete>
+	
+	<!-- 根据id查询 -->
+	<select id="findById" parameterType="java.io.Serializable"
+		resultMap="DeptInfoMap">
+		select * from tb_department where DEPT_ID = #{deptId}
+	</select>
+
+	<!-- 查询全部 -->
+	<select id="findAll" parameterType="com.ssm.OaManager.entity.hrm.Department" resultMap="DeptInfoMap">
+		select * from tb_department
+	</select>
+	
+	<select id="findByDept" parameterType="com.ssm.OaManager.entity.hrm.Department" resultMap="DeptInfoMap">
+		select * from tb_department d left join TB_Emplyee e on d.dept_id = e.dept_id where d.dept_id=#{deptId}
+	</select>
+	
+	<!-- 职位实体关系映射 -->
+	<resultMap type="com.ssm.OaManager.entity.hrm.Position" id="PosMap">
+		<id column="pos_id" property="posId" />
+		<result column="pos_name" property="posName" />
+		<result column="pos_descriti" property="posDescriti" />
+
+	</resultMap>
+	<!-- 查询职位 -->
+	<select id="findByPos" parameterType="com.ssm.OaManager.entity.hrm.Position"
+		resultMap="PosMap">
+		SELECT * FROM TB_POSITION
+		<where>
+			<if test="posName!=null">
+				pos_name = #{posName}
+			</if>
+		</where>
+	</select>
+</mapper>

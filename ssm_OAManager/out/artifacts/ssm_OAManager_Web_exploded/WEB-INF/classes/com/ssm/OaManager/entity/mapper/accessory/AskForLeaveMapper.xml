@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.accessory.AskForLeave">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.accessory.AskForLeave"
+		id="AskForLeaveMap">
+		<id column="afl_id" property="aflId"></id>
+		<result column="afl_ApplicationDate" property="aflApplicationDate" />
+		<result column="afl_StartDate" property="aflStartDate" />
+		<result column="afl_EndDate" property="aflEndDate" />
+		<result column="afl_Content" property="aflContent" />
+		<result column="afl_ApproveStatus" property="aflApproveStatus" />
+		<result column="afl_ApproveContent" property="aflApproveContent" />
+		<result column="afl_ApproveDate" property="aflApproveDate" />
+		
+		<association property="aflType"
+			resultMap="com.ssm.OaManager.entity.accessory.AflType.AflTypeMap"></association>
+		<association property="user"
+			resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+	</resultMap>
+
+	<!-- 表 -->
+	<sql id="table">
+		TB_ACKFORLEAVE
+	</sql>
+	
+	<!-- 通过对象进行查找 -->
+	<select id="findByAskForLeave" parameterType="com.ssm.OaManager.entity.accessory.AskForLeave"
+		resultMap="AskForLeaveMap">
+		SELECT a.*,t.afltype_name FROM
+		<include refid="table" />
+		A INNER JOIN TB_AFLTYPE T ON A.ALFTYPE_ID = T.ALFTYPE_ID
+		<where>
+			<if test="aflId!=null">
+				afl_id = #{aflId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 添加 -->
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="aflApplicationDate!=null">
+				afl_ApplicationDate,
+			</if>
+			<if test="aflStartDate!=null">
+				afl_StartDate,
+			</if>
+			<if test="aflEndDate!=null">
+				afl_EndDate,
+			</if>
+			<if test="aflContent!=null">
+				afl_Content,
+			</if>
+			<if test="aflApproveStatus!=null">
+				afl_ApproveStatus,
+			</if>
+			<if test="aflApproveContent!=null">
+				afl_ApproveContent,
+			</if>
+			<if test="aflApproveDate!=null">
+				afl_ApproveDate,
+			</if>
+			<if test="user.userId!=null">
+				user_id,
+			</if>
+			<if test="aflType.aflTypeId!=null">
+				alftype_id,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="aflApplicationDate!=null">
+				#{aflApplicationDate},
+			</if>
+			<if test="aflStartDate!=null">
+				#{aflStartDate},
+			</if>
+			<if test="aflEndDate!=null">
+				#{aflEndDate},
+			</if>
+			<if test="aflContent!=null">
+				#{aflContent},
+			</if>
+			<if test="aflApproveStatus!=null">
+				#{aflApproveStatus},
+			</if>
+			<if test="aflApproveContent!=null">
+				#{aflApproveContent},
+			</if>
+			<if test="aflApproveDate!=null">
+				#{aflApproveDate},
+			</if>
+			<if test="user.userId!=null">
+				#{user.userId,jdbcType=INTEGER},
+			</if>
+			<if test="aflType.aflTypeId!=null">
+				#{aflType.aflTypeId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 插入数据并返回主键 -->
+	<insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="aflId"
+		parameterType="com.ssm.OaManager.entity.accessory.AskForLeave">
+		INSERT INTO
+		<include refid="table" />
+		(
+		<include refid="key" />
+		)
+		VALUES
+		(
+		<include refid="value" />
+		)
+	</insert>
+</mapper>

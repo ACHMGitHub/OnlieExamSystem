@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.OaManager.entity.hrm.Salary">
+	<resultMap type="com.ssm.OaManager.entity.hrm.Salary" id="salaryMap">
+		<id property="salId" column="sal_id" />
+		<result property="salDate" column="date_sal" />
+		<result property="basicSal" column="basic_salary" />
+		<result property="cutMoney" column="cut_money" />
+		<result property="bonus" column="bonus" />
+		<result property="tax" column="tax" />
+		<result property="finalSal" column="final_sal" />
+		<association property="emp"
+			resultMap="com.ssm.OaManager.entity.hrm.Employee.employeeMap"></association>
+	</resultMap>
+
+	<resultMap type="com.ssm.OaManager.entity.hrm.SalaryInfo" id="salaryInfoMap">
+		<id property="empId" column="emp_id" />
+		<result property="empNumber" column="emp_number" />
+		<result property="empName" column="emp_name" />
+		<result property="empSalary" column="emp_salary" />
+		<result property="date" column="date_le" />
+		<result property="evTime" column="time_ev" />
+		<result property="evCuse" column="cuse_ev" />
+		<result property="leTime" column="time_le" />
+	</resultMap>
+
+	<select id="findAll" resultMap="salaryMap">
+		select * from tb_salary s left
+		join tb_emplyee em
+		on s.emp_id = em.emp_id
+       </select>
+
+	<select id="selectEvectionToSal" resultMap="salaryInfoMap">
+
+		select * from(
+		select
+		em.*,sum(le.time_le) as time_le ,CONCAT(YEAR((select
+		now())),'-',MONTH((select now()))) as date_le from tb_leave le right
+		join tb_emplyee em
+		on le.emp_id = em.emp_id and
+		CONCAT(YEAR(le.date_le),'-',MONTH(le.date_le))=CONCAT(YEAR((select
+		now())),'-',MONTH((select now()))) or
+		isnull(le.date_le)
+		group by
+		em.emp_id) a inner join
+
+		(select sum(ev.time_ev) as
+		time_ev,sum(ev.cuse_ev) as cuse_ev ,em.emp_id id
+		from tb_evection ev
+		right join tb_emplyee em
+		on ev.emp_id = em.emp_id and
+		CONCAT(YEAR(ev.date_ev),'-',MONTH(ev.date_ev))=CONCAT(YEAR((select
+		now())),'-',MONTH((select now()))) or isnull(ev.date_ev)
+		group by
+		em.emp_id) b
+
+		on a.emp_id = b.id
+
+		where a.emp_id not in (select emp_id from tb_salary) or a.date_le not in
+		(select date_sal from tb_salary where emp_id = a.emp_id)
+
+
+    </select>
+
+
+	<sql id="key">
+		<trim suffixOverrides=",">
+			<if test="salDate!=null">
+				date_sal,
+		    </if>
+			<if test="basicSal!=null">
+				basic_salary,
+		    </if>
+			<if test="cutMoney!=null">
+				cut_money,
+		    </if>
+			<if test="bonus!=null">
+				bonus,
+		    </if>
+			<if test="tax!=null">
+				tax,
+		    </if>
+			<if test="finalSal!=null">
+				final_sal,
+		    </if>
+			<if test="emp!=null and emp.empId!=null">
+				emp_id,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<trim suffixOverrides=",">
+			<if test="salDate!=null">
+				#{salDate},
+		    </if>
+			<if test="basicSal!=null">
+				#{basicSal},
+		    </if>
+			<if test="cutMoney!=null">
+				#{cutMoney},
+		    </if>
+			<if test="bonus!=null">
+				#{bonus},
+		    </if>
+			<if test="tax!=null">
+				#{tax},
+		    </if>
+			<if test="finalSal!=null">
+				#{finalSal},
+		    </if>
+			<if test="emp!=null and emp.empId!=null">
+				#{emp.empId},
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.ssm.OaManager.entity.hrm.Salary">
+		insert into tb_salary(
+		<include refid="key"></include>
+		)
+		values(
+		<include refid="value"></include>
+		)
+	</insert>
+
+</mapper>

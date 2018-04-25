@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.stationery.Scrap" >
+  <resultMap id="ScrapMap" type="com.ssm.OaManager.entity.stationery.Scrap" >
+    <id column="SCRAP_ID" property="scrapId" jdbcType="INTEGER" />
+    <result column="SCRAP_AMOUNT" property="scrapAmount" jdbcType="INTEGER" />
+    <result column="SCRAP_descripti" property="scrapDescripti" jdbcType="VARCHAR" />
+    
+    <association property="stationery"
+	  resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap"></association>
+    <association property="user"
+	  resultMap="com.ssm.OaManager.entity.User.userMap"></association>
+  </resultMap>
+  
+  
+	<!-- 列名 -->
+	 <sql id="key">
+	     <!-- 去掉最后一个, -->
+	     <trim suffixOverrides=",">
+	         <if test="user.userId!=null">
+	             user_id,
+	         </if>
+	         <if test="stationery.stationeryId!=null">
+	             stationery_id,
+	         </if>
+	         
+	         <if test="scrapAmount!=null">
+	              SCRAP_AMOUNT,
+	         </if>
+	         <if test="scrapDescripti!=null">
+	              SCRAP_descripti,
+	         </if>
+	     </trim>
+	 </sql>
+	 
+	 <!-- 列值 -->
+	 <sql id="value">
+	    <!-- 去掉最后一个, -->
+	    <trim suffixOverrides=",">
+	        <if test="user.userId!=null">
+	             #{user.userId,jdbcType=INTEGER},
+	         </if>
+	         <if test="stationery.stationeryId!=null">
+	             #{stationery.stationeryId,jdbcType=INTEGER},
+	         </if>
+	         
+	     	 <if test="scrapAmount!=null">
+	              #{scrapAmount},
+	         </if>
+	         <if test="scrapDescripti!=null">
+	              #{scrapDescripti},
+	         </if>
+	    </trim>
+	 </sql>
+  
+  <!-- 添加 -->
+  <insert id="insert" parameterType="com.ssm.OaManager.entity.stationery.Scrap">
+       insert into tb_scrap (<include refid="key"/>)values(<include refid="value"/>)
+  </insert>
+  
+  <!-- 根据ID删除 -->
+  <delete id="deleteById" parameterType="java.io.Serializable">
+       delete from tb_scrap where SCRAP_ID = #{scrapId}
+  </delete>
+  <!-- 修改 -->
+  <update id="update" parameterType="com.ssm.OaManager.entity.stationery.Scrap">
+      update tb_scrap
+      <set>
+         	<if test="user.userId!=null">
+	             user_id= #{user.userId,jdbcType=INTEGER},
+	         </if>
+	         <if test="stationery.stationeryId!=null">
+	             stationery_id=#{stationery.stationeryId,jdbcType=INTEGER},
+	         </if>
+	          <if test="scrapAmount!=null">
+	              SCRAP_AMOUNT=#{scrapAmount},
+	         </if>
+	         <if test="scrapDescripti!=null">
+	              SCRAP_descripti=#{scrapDescripti},
+	         </if>
+      </set>
+      where SCRAP_ID = #{scrapId}
+  </update>
+  <!-- 查询所有员工 -->
+  <select id="findAll" resultMap="ScrapMap">
+       select * from tb_scrap  g 
+      left join tb_user u on g.user_id = u.user_id 
+      left join tb_stationery s on s.stationery_id = g.stationery_id
+  </select>
+  
+<!--通过id查询一条数据 -->
+	<select id="findById" parameterType="java.io.Serializable"
+		resultMap="ScrapMap">
+		   select * from tb_scrap  g 
+		      left join tb_user u on g.user_id = u.user_id 
+		      left join tb_stationery s on s.stationery_id = g.stationery_id
+		where
+		g.SCRAP_ID = #{scrapId}
+	</select>
+	
+		<!-- 分页查询数据 -->
+	<select id="findByPage" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultMap="ScrapMap">
+			select * from tb_scrap  g 
+		      left join tb_user u on g.user_id = u.user_id 
+		      left join tb_stationery s on s.stationery_id = g.stationery_id
+		where 1=1
+		limit 0 ,10
+	</select>
+	
+	<!-- 查询记录数 -->
+	<select id="findCount" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultType="int">
+		select
+		count(*)
+		from tb_scrap
+	</select>  
+</mapper>

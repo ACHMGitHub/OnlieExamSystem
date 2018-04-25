@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.stationery.Stationery">
+	<resultMap id="StationeryMap"
+		type="com.ssm.OaManager.entity.stationery.Stationery">
+		<id column="stationery_id" property="stationeryId" jdbcType="INTEGER" />
+		<result column="stationery_name" property="stationeryName"
+			jdbcType="VARCHAR" />
+		<result column="stationery_date" property="stationeryDate"
+			jdbcType="DATE" />
+		<result column="stationery_monery" property="stationeryMonery"
+			jdbcType="DOUBLE" />
+		<result column="stationery_amount" property="stationeryAmount"
+			jdbcType="INTEGER" />
+		<result column="stationery_descripti" property="stationeryDescripti"
+			jdbcType="VARCHAR" />
+
+		<association property="stationerytype"
+			resultMap="com.ssm.OaManager.entity.stationery.Stationerytype.StationerytypeMap"></association>
+	</resultMap>
+
+	<sql id="table">
+		tb_stationery
+	</sql>
+
+	<!-- 列名 -->
+	<sql id="key">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="stationeryName!=null">
+				stationery_name,
+			</if>
+			<if test="stationeryDate!=null">
+				stationery_date,
+			</if>
+			<if test="stationeryMonery!=null">
+				stationery_monery,
+			</if>
+			<if test="stationeryAmount!=null">
+				stationery_amount,
+			</if>
+			<if test="stationeryDescripti!=null">
+				stationery_descripti,
+			</if>
+			<if test="stationerytype.statitypeId!=null">
+				statitype_id,
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 列值 -->
+	<sql id="value">
+		<!-- 去掉最后一个, -->
+		<trim suffixOverrides=",">
+			<if test="stationeryName!=null">
+				#{stationeryName},
+			</if>
+			<if test="stationeryDate!=null">
+				#{stationeryDate},
+			</if>
+			<if test="stationeryMonery!=null">
+				#{stationeryMonery},
+			</if>
+			<if test="stationeryAmount!=null">
+				#{stationeryAmount},
+			</if>
+			<if test="stationeryDescripti!=null">
+				#{stationeryDescripti},
+			</if>
+			<if test="stationerytype.statitypeId!=null">
+				#{stationerytype.statitypeId},
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 查询所有 -->
+	<select id="findAll"
+		resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap">
+		select
+		*
+		from tb_stationery s left join tb_stationerytype t on s.statitype_id =
+		t.statitype_id
+	</select>
+
+	<!-- 查询记录数 -->
+	<select id="findCount" parameterType="com.ssm.OaManager.utils.PageBean"
+		resultType="int">
+		select count(*) from tb_stationery f
+	</select>
+
+	<!-- 按照ID查询 -->
+	<select id="findById"  parameterType="java.io.Serializable"
+		resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap">
+		select
+		*
+		from tb_stationery s left join tb_stationerytype t on s.statitype_id =
+		t.statitype_id where stationery_id = #{stationeryId}
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.ssm.OaManager.entity.stationery.Stationery">
+		insert into
+		<include refid="table" />
+		(
+		<include refid="key" />
+		)values(
+		<include refid="value" />
+		)
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="deleteById" parameterType="com.ssm.OaManager.entity.stationery.Stationery">
+		delete from tb_stationery where stationery_id = #{stationeryId}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="com.ssm.OaManager.entity.stationery.Stationery">
+		update tb_stationery set
+		stationery_name = #{stationeryName},stationery_monery =
+		#{stationeryMonery},stationery_amount =
+		#{stationeryAmount},stationery_descripti =
+		#{stationeryDescripti},statitype_id = #{stationerytype.statitypeId}
+		where stationery_id = #{stationeryId}
+	</update>
+
+	<!-- 查询所有 -->
+	<select id="findByTypeId"  parameterType="java.io.Serializable"
+		resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap">
+		select
+		*
+		from tb_stationery s left join tb_stationerytype t on s.statitype_id =
+		t.statitype_id where  s.statitype_id = #{id}
+	</select>
+</mapper>

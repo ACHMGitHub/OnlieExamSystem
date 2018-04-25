@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.accessory.AflType">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.accessory.AflType"
+		id="AflTypeMap">
+		<id column="alfType_id" property="aflTypeId"></id>
+		<result column="aflType_name" property="aflTypeName" />
+		<result column="aflType_descripti" property="aflTypeDescripti" />
+
+	</resultMap>
+
+	<!-- 表 -->
+	<sql id="table">
+		TB_AFLTYPE
+	</sql>
+	
+	<!-- 查询所有记录 -->
+	<select id="findAll" resultMap="AflTypeMap">
+		SELECT * FROM 
+		<include refid="table"></include> 		
+	</select>
+</mapper>

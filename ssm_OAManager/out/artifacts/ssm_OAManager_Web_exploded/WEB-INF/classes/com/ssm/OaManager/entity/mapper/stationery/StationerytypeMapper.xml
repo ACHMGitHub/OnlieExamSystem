@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.stationery.Stationerytype" >
+  <resultMap id="StationerytypeMap" type="com.ssm.OaManager.entity.stationery.Stationerytype" >
+    <id column="statitype_id" property="statitypeId" jdbcType="INTEGER" />
+    <result column="statitype_name" property="statitypeName" jdbcType="VARCHAR" />
+    <result column="statitype_date" property="statitypeDate" jdbcType="DATE" />
+    <result column="statitype_descripti" property="statitypeDescripti" jdbcType="VARCHAR" />
+    
+     <association property="stationerylibrary"
+	  resultMap="com.ssm.OaManager.entity.stationery.Stationerylibrary.StationerylibraryMap"></association>
+  </resultMap>
+  
+  <sql id="table">
+		tb_stationerytype
+	</sql>
+	
+	<!-- 列名 -->
+	 <sql id="key">
+	     <!-- 去掉最后一个, -->
+	     <trim suffixOverrides=",">
+	         <if test="statitypeName!=null">
+	             statitype_name,
+	         </if>
+	         <if test="statitypeDate!=null">
+	             statitype_date,
+	         </if>
+	         <if test="stationerylibrary.statilibraryId!=null">
+	              statilibrary_id,
+	         </if>
+	         <if test="statitypeDescripti!=null">
+	              statitype_descripti,
+	         </if>
+	     </trim>
+	 </sql>
+	 
+	 <!-- 列值 -->
+	 <sql id="value">
+	    <!-- 去掉最后一个, -->
+	    <trim suffixOverrides=",">
+	        <if test="statitypeName!=null">
+	             #{statitypeName},
+	         </if>
+	         <if test="statitypeDate!=null">
+	             #{statitypeDate},
+	         </if>
+	         <if test="stationerylibrary.statilibraryId!=null">
+	              #{stationerylibrary.statilibraryId,jdbcType=INTEGER},
+	         </if>
+	         <if test="statitypeDescripti!=null">
+	              #{statitypeDescripti},
+	         </if>
+	    </trim>
+	 </sql>
+  
+  <!-- 查询所有 -->
+  <select id="findAll" resultMap="com.ssm.OaManager.entity.stationery.Stationerytype.StationerytypeMap">
+        select * 
+        from tb_stationerytype e 
+        left join tb_stationerylibarary y on e.statilibrary_id=y.statilibrary_id
+  </select>
+  
+	<!--按照ID查询-->
+	<select id="findById"  parameterType="java.io.Serializable" resultMap="com.ssm.OaManager.entity.stationery.Stationerytype.StationerytypeMap" >
+	    select * from tb_stationerytype e
+          left join tb_stationerylibarary y on e.statilibrary_id = y.statilibrary_id 
+          where e.statitype_id=#{statitypeId}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.ssm.OaManager.entity.stationery.Stationerytype">
+       insert into tb_stationerytype(<include refid="key"/>)values(<include refid="value"/>)
+    </insert>
+	
+	<!-- 删除 -->
+	<delete id="deleteById"  parameterType="com.ssm.OaManager.entity.stationery.Stationerytype">
+	    delete from <include refid="table"/> where statitype_id=#{statitypeId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="update"  parameterType="com.ssm.OaManager.entity.stationery.Stationerytype">
+	    update tb_stationerytype 
+                    <set>
+                            <if test="stationerylibrary.statilibraryId!=null">
+			                  statilibrary_id=#{stationerylibrary.statilibraryId,jdbcType=INTEGER},
+			                </if>
+                           <if test="statitypeName!=null">
+				                  statitype_name=#{statitypeName},
+				             </if>
+				             <if test="statitypeDescripti!=null">
+				                  statitype_descripti=#{statitypeDescripti},
+				             </if>
+                    </set> 
+                    where statitype_id=#{statitypeId}
+	</update>
+	
+	  <!-- 查询所有 -->
+  <select id="findBylibraryId"  parameterType="java.io.Serializable"  resultMap="com.ssm.OaManager.entity.stationery.Stationerytype.StationerytypeMap">
+        select * 
+        from tb_stationerytype e 
+        left join tb_stationerylibarary y on e.statilibrary_id=y.statilibrary_id where e.statilibrary_id=#{id}
+  </select>
+ 
+</mapper>

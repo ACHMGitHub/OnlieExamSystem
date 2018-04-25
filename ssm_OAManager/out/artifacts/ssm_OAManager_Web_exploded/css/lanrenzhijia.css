@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* 代码整理：懒人之家 */
+
+* {
+	margin:0;
+	padding:0;
+}
+ul, li {
+	list-style:none;
+}
+h1.tit-h1 {
+	font-size:38px;
+	text-align:center;
+	margin:30px 0 15px;
+	color:#f60;
+}
+.go-back {
+	text-align:center;
+	border-top:1px dashed #ccc;
+	padding:10px;
+	margin-top:20px;
+	font-size:40px;
+}
+.wrap {
+	border:1px dashed #ccc;
+	background:#f8f8f8;
+	padding:20px;
+}
+
+input {
+	width:230px;
+	height:28px;
+	margin:10px;
+	line-height:28px;
+}
+.login .on_changes {
+	width:232px;
+	position:absolute;
+	top:auto;
+	left:auto;
+	list-style:none;
+	background:#FFF;
+	border:1px solid #000;
+	display:none;
+	padding:2px;
+	z-index: 5;
+	
+}
+.login .on_changes li {
+	padding:4px;
+	
+}
+.login .on_changes li.active {
+	background:#CEE7FF;
+}

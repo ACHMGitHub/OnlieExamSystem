@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.OaManager.entity.accessory.ReimType">
+
+	<!-- 实体映射关系 -->
+	<resultMap type="com.ssm.OaManager.entity.accessory.ReimType"
+		id="ReimTypeMap">
+		<id column="reimType_id" property="reimTypeId"></id>
+		<result column="reimType_name" property="reimTypeName" />
+		<result column="reimType_descripti" property="reimTypeDescripti" />
+	</resultMap>
+	
+	<!-- 表 -->
+	<sql id="table">
+		tb_reimtype
+	</sql>
+
+	<!-- 查询所有记录数 -->
+	<select id="findAll" resultMap="ReimTypeMap">
+		select * from 
+		<include refid="table"></include>
+	</select>
+
+</mapper>

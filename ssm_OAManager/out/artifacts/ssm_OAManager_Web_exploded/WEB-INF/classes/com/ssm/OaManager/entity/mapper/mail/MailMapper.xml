@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper  namespace="com.ssm.OaManager.entity.mail.Mail"> 
+
+			<resultMap type="com.ssm.OaManager.entity.mail.Mail" id="MailMap">
+					<id property="mailId"  column="mailId"/>
+					<result  property="sender"  column="sender"/>
+					<result  property="reveicer"  column="reveicer"/>
+					<result property="sereveicer" column="sereveicer"/>
+					<result  property="anreveicer"  column="anreveicer"/>
+					<result property="subject"  column="subject"/>
+					<result property="content" column="content"/>
+					<result property="time" column="time"/>
+					<result property="attachment" column="attachment"/>
+					<result property="date" column="date"/>
+					<result property="mtype" column="mtype"/>
+			</resultMap>
+			
+						<sql id="key">
+						    <!-- 去掉最后一个, -->
+						    <trim suffixOverrides=",">
+						        <if test="sender!=null">sender,</if>
+						        <if test="reveicer!=null">reveicer,</if>
+						        <if test="sereveicer!=null">sereveicer,</if>
+						        <if test="anreveicer!=null">anreveicer,</if>
+						        <if test="subject!=null">subject,</if>
+						        <if test="content!=null">content,</if>
+						        <if test="time!=null">time,</if>
+						        <if test="attachment!=null">attachment,</if>
+						        <if test="date!=null">date,</if>
+						        <if test="mtype!=null">mtype,</if>
+						    </trim>
+					 </sql>
+					 
+					 <sql id="value">
+						    <!-- 去掉最后一个, -->
+						    <trim suffixOverrides=",">
+						        <if test="sender!=null">#{sender},</if>
+						        <if test="reveicer!=null">#{reveicer},</if>
+						        <if test="sereveicer!=null">#{sereveicer},</if>
+						        <if test="anreveicer!=null">#{anreveicer},</if>
+						        <if test="subject!=null">#{subject},</if>
+						        <if test="content!=null">#{content},</if>
+						        <if test="time!=null">#{time},</if>
+						        <if test="attachment!=null">#{attachment},</if>
+						        <if test="date!=null">#{date},</if>
+						        <if test="mtype!=null">#{mtype},</if>
+						    </trim>
+				  </sql>
+			<!-- 添加数据 -->
+			<insert id="insert"  parameterType="com.ssm.OaManager.entity.mail.Mail">
+			 		insert into tb_mail(<include refid="key"/>) values(<include refid="value"/>)
+			</insert>
+			
+			<!-- 修改数据 -->
+		    <update id="update"   parameterType="com.ssm.OaManager.entity.mail.Mail">
+					update tb_mail  
+						<set>
+					        <if test="sender!=null">sender= #{sender},</if>
+					        <if test="reveicer!=null">reveicer=#{reveicer},</if>
+					        <if test="anreveicer!=null">anreveicer=#{anreveicer},</if>
+					        <if test="subject!=null">subject=#{subject},</if>
+					        <if test="content!=null">content!=${content},</if>
+					        <if test="time!=null">time!=${time}</if>
+					        <if test="attachment!=null">attachment!=${attachment}</if>
+					        <if test="date!=null">date!=${date}</if>
+					        <if test="mtype!=null">mtype=${mtype}</if>
+   					   </set>
+    				where mailId = #{mailId}
+			</update>
+			
+			<!-- 删除一条数据 -->
+			<delete id="deleteById"  parameterType="java.io.Serializable">
+					delete from  tb_mail where mailId = #{mailId}
+			</delete>
+			
+			<!-- 批量删除 -->
+			<delete id="delete"  parameterType="java.util.Map">
+					delete from  tb_mail where mailId in
+								 <!-- foreach用于迭代数组元素
+							         open表示开始符号
+							         close表示结束符合
+							         separator表示元素间的分隔符
+							         item表示迭代的数组，属性值可以任意，但提倡与方法的数组名相同
+							         #{ids}表示数组中的每个元素值
+							     -->
+				    <foreach collection="ids" open="(" close=")" separator="," item="id">
+				        		#{id}
+				    </foreach>
+			</delete>
+			
+			<!--通过id查询一条数据 -->
+		   <select id="findById"  parameterType="java.io.Serializable"  resultMap="MailMap">
+				select * from tb_mail where mailid = #{mailId}
+			</select> 
+			
+
+			<!-- 查询全部数据 通用-->
+			<select id="findAll"  resultMap="MailMap" >
+			  	select * from tb_mail
+			</select>
+			
+			<!-- 查询全部数据 有条件 供已发 草稿-->
+			<select id="findPart" parameterType="com.ssm.OaManager.entity.mail.Mail" resultMap="MailMap">
+			    select * from tb_mail 
+			    <where>
+			       <if test="sender!=null">sender = #{sender},</if>
+			       <if test="mtype!=null">mtype = #{mtype}</if>
+			    </where>
+			</select>
+			
+
+			
+		
+</mapper>

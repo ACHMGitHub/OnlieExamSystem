@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.OaManager.entity.stationery.StationeryStatus" >
+  <resultMap id="stationeryStatusMap" type="com.ssm.OaManager.entity.stationery.StationeryStatus" >
+    <id column="stationeryStatus_id" property="stationeryStatusId" jdbcType="INTEGER" />
+    <result column="register_type" property="registerType" />
+    <result column="amount" property="amount" />
+   	<result column="oparate_date" property="oparateDate" />
+    <result column="desprict" property="desprict"  />
+    <result column="addition_massage" property="additionMassage" />
+    
+    <association property="stationery"
+	    resultMap="com.ssm.OaManager.entity.stationery.Stationery.StationeryMap"></association>
+	     <association property="proposerName"
+	    resultMap="com.ssm.OaManager.entity.User.userMap">
+	    </association>
+	 <association property="oparateName" javaType="com.ssm.OaManager.entity.User" >
+	      <id property="userId" column="user_id2" />
+		<!-- 员工 一对一关系配置 -->
+		<association property="emp" javaType="com.ssm.OaManager.entity.hrm.Employee">
+			<id property="empId" column="EMP_ID2" />
+			<result property="empName" column="EMP_Name2" />
+		</association>
+	    </association>
+  </resultMap>
+  <!-- 列名 -->
+	 <sql id="key">
+	     <!-- 去掉最后一个, -->
+	     <trim suffixOverrides=",">
+	         <if test="stationery.stationeryId!=null">
+	             stationery_id,
+	         </if>
+	         <if test="registerType!=null">
+	             register_type,
+	         </if>
+	         
+	         <if test="proposerName.userId!=null">
+	              proposer_name,
+	         </if>
+	         <if test="amount!=null">
+	              amount,
+	         </if>
+	         <if test="oparateDate!=null">
+	              oparate_date,
+	         </if>
+	         <if test="oparateName.userId!=null">
+	              oparate_name,
+	         </if>
+	         <if test="additionMassage!=null">
+	              addition_massage,
+	         </if>
+	         <if test="desprict!=null">
+	              desprict,
+	         </if>
+	     </trim>
+	 </sql>
+	 
+	 <!-- 列值 -->
+	 <sql id="value">
+	    <!-- 去掉最后一个, -->
+	    <trim suffixOverrides=",">
+	       <if test="stationery.stationeryId!=null">
+	             #{stationery.stationeryId},
+	         </if>
+	         <if test="registerType!=null">
+	             #{registerType},
+	         </if>
+	         
+	         <if test="proposerName.userId!=null">
+	              #{proposerName.userId},
+	         </if>
+	         <if test="amount!=null">
+	             #{ amount},
+	         </if>
+	         <if test="oparateDate!=null">
+	              #{oparateDate},
+	         </if>
+	         <if test="oparateName.userId!=null">
+	              #{oparateName.userId},
+	         </if>
+	         <if test="additionMassage!=null">
+	              #{additionMassage},
+	         </if>
+	         <if test="desprict!=null">
+	              #{desprict},
+	         </if>
+	    </trim>
+	 </sql>
+  
+  <!-- 添加 -->
+  <insert id="insert" parameterType="com.ssm.OaManager.entity.stationery.Scrap">
+       insert into tb_stationerystatus (<include refid="key"/>)values(<include refid="value"/>)
+  </insert>
+  
+   <!-- 查询所有 -->
+  <select id="findAll" resultMap="stationeryStatusMap">
+	select b.*,s.*,u.*,e.*,u2.user_id as user_id2,e2.emp_id as emp_id2,
+			   e2.emp_name as emp_name2 from 
+			   tb_stationerystatus b left join tb_stationery s 
+      	        on s.stationery_id = b.stationery_id 
+      	       left join tb_user u on
+      	        b.proposer_name = u.user_id left join tb_emplyee e on u.emp_id = e.emp_id
+      	         left join tb_user u2 on b.oparate_name = u2.user_id 
+      	         left join  tb_emplyee e2 on u2.emp_id = e2.emp_id
+  </select>
+  
+  <!-- 修改 -->
+  <update id="update" parameterType="com.ssm.OaManager.entity.stationery.Purchase">
+      update tb_purchase
+      <set>
+         	<if test="stationery.stationeryId!=null">
+	             stationery_id=#{stationery.stationeryId},
+	         </if>
+	         <if test="registerType!=null">
+	             register_type=#{registerType},
+	         </if>
+	         
+	         <if test="proposerName.userId!=null">
+	              proposer_name=#{proposerName.userId},
+	         </if>
+	         <if test="amount!=null">
+	              amount=#{amount},
+	         </if>
+	         <if test="oparateDate!=null">
+	              oparate_date=#{oparateDate},
+	         </if>
+	         <if test="oparateName.userId!=null">
+	              oparate_name=#{oparateName.userId},
+	         </if>
+	         <if test="additionMassage!=null">
+	              addition_massage=#{additionMassage},
+	         </if>
+	         <if test="desprict!=null">
+	              desprict=#{desprict},
+	         </if>
+      </set>
+      where stationeryStatus_id = #{stationeryStatusId}
+  </update>
+  
+	  <!--通过id查询一条数据 -->
+		<select id="findBystationeryId" parameterType="java.io.Serializable"
+			resultMap="stationeryStatusMap">
+			select b.*,s.*,u.*,e.*,u2.user_id as user_id2,e2.emp_id as emp_id2,
+			   e2.emp_name as emp_name2 from 
+			   tb_stationerystatus b left join tb_stationery s 
+      	        on s.stationery_id = b.stationery_id 
+      	       left join tb_user u on
+      	        b.proposer_name = u.user_id left join tb_emplyee e on u.emp_id = e.emp_id
+      	         left join tb_user u2 on b.oparate_name = u2.user_id 
+      	         left join  tb_emplyee e2 on u2.emp_id = e2.emp_id
+			where
+			b.stationery_id=#{id}
+		</select>
+		
+		   <!-- 查询所有 -->
+  <select id="findAllUserId"  parameterType="java.io.Serializable" resultMap="stationeryStatusMap">
+	select b.*,s.*,u.*,e.*,u2.user_id as user_id2,e2.emp_id as emp_id2,
+			   e2.emp_name as emp_name2 from 
+			   tb_stationerystatus b left join tb_stationery s 
+      	        on s.stationery_id = b.stationery_id 
+      	       left join tb_user u on
+      	        b.proposer_name = u.user_id left join tb_emplyee e on u.emp_id = e.emp_id
+      	         left join tb_user u2 on b.oparate_name = u2.user_id 
+      	         left join  tb_emplyee e2 on u2.emp_id = e2.emp_id
+      	         where b.oparate_name = #{userId}
+  </select>
+</mapper>
